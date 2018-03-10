@@ -7,9 +7,21 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## About Laravel
+## 本地部署步骤
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+1.Git pull
+2.本地安装composer，控制台cd到仓库目录composer install
+3.将根目录.env.sample复制为.env 修改里面的MYSQL相关信息
+4.执行php artisan key:generate
+5.执行php artisan storage:link
+6.执行php artisan migrate
+7.执行php artisan db:seed
+
+首次部署后，每次pull后只需执行php artisan migrate
+如有新的包加入则执行composer update
+或者新的seed则执行php artisan db:seed --class=指定seeder
+
+## Laravel 本地部署步骤
 
 - [Simple, fast routing engine](https://laravel.com/docs/routing).
 - [Powerful dependency injection container](https://laravel.com/docs/container).
