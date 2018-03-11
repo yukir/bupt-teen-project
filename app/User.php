@@ -27,6 +27,24 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
     
+    //模型关联
+    public function activities() {
+        return $this->hasMany('App\Activitiy')
+    }
+    
+    public function comments() {
+        return $this->hasMany('App\Comment')
+    }
+    
+    public function applications() {
+        return $this->hasMany('App\Application')
+    }
+    
+    public function community_days() {
+        return $this->hasMany('App\CommunityDay')
+    }
+    
+    //方法
     public function isSuperAdmin() {
         return $this->super_admin;
     }

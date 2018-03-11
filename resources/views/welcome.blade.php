@@ -7,15 +7,12 @@
 
         <title>Laravel</title>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
         <!-- Styles -->
         <style>
             html, body {
                 background-color: #fff;
                 color: #636b6f;
-                font-family: 'Raleway', sans-serif;
+                font-family: 'Microsoft Yahei','Microsoft YaHei','微软雅黑',微软雅黑,'Simhei','SimHei',黑体,'黑体',sans-serif;
                 font-weight: 100;
                 height: 100vh;
                 margin: 0;
@@ -69,29 +66,36 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/home') }}">主页</a>
+                        <a href="{{ route('logout') }}">登出</a>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
+                        <a href="{{ route('login') }}">登录</a>
+                        <a href="{{ route('register') }}">注册</a>
                     @endauth
                 </div>
             @endif
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    北邮青年 - 测试用主页
                 </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                
+                <div class="test">
+                @auth
+                @else
+                @endauth
+                </div>
+                
+                <div class="test">
+                    <h2>测试数据:</h2>
+                    <p>Auth::user()->isSuperAdmin()
+                    @auth 
+                        {{ Auth::user()->isSuperAdmin() }}
+                    @endauth
+                    </p>
                 </div>
             </div>
 
-            <example-component id="app"></example-component>
         </div>
         <script src="/js/app.js"></script>
     </body>
