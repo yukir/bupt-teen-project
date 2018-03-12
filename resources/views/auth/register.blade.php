@@ -30,6 +30,7 @@
             </div>      
             <div class="row">
                 <div class="input-field col s6">
+                    <input id="password-confirm" type="password" class="validate" name="password_confirmation" required>
                     <label for="password-confirm">{{ __('确认密码') }}</label>
                 </div>
             </div>
