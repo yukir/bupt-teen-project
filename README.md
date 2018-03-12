@@ -7,7 +7,7 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## Laravel 首次部署步骤
+## 项目 首次部署步骤
 
 - Git pull
 - 本地安装composer，控制台cd到仓库目录composer install
@@ -22,6 +22,24 @@
 首次部署后，每次pull后只需执行php artisan migrate  
 如有新的包加入则执行composer update  
 或者新的seed则执行php artisan db:seed --class=指定seeder  
+
+## 测试用户列表：
+(用户名#密码)
+
+admin#admin 最高权限  
+demo#demo 默认注册用户  
+banned#banned 被封禁用户  
+
+- 以下为各种管理员，权限见下方User  
+
+sxyl_admin#123456  
+xxst_admin#123456   
+zttr_xtw#123456  
+zttr_tzs#123456  
+zttr_tgpx#123456  
+zttr_admin#123456   
+xywh_admin#123456  
+
 
 ## 模型(表)
 以下模型均有自增id、created_at、updated_at三个属性 省略。
@@ -73,9 +91,9 @@ end_at 结束时间 可空
 
 ## 需要向甲方问清楚的事情
 
-1. "活动反馈"的机制：反馈是否在活动结束之后才可提交；是否必须要参加活动才可提交；反馈是否公开给所有用户；  
-2. "问卷"的机制:  
-3. "线上考试"和"作业"的机制：  
+1. "活动反馈"的机制：反馈是否在活动结束之后才可提交；是否必须要参加活动才可提交；反馈是否公开给所有用户；若公开是否需要审核；    
+2. "问卷"的机制: 题型有哪些；是否一定要填写；是否需要问卷数据可视化；是否需要批量导出等（若有，可能得延长工作时间等）  
+3. "线上考试"和"作业"的机制： 题型有哪些；是否需要批量导出等（若有，可能得延长工作时间等）  
 4. "活动报名审核"的机制：审核失败是否需要告知驳回理由；  
 
 ## 相关教程

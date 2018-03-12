@@ -9,45 +9,56 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'username', 'password',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token',
     ];
     
     //模型关联
     public function activities() {
-        return $this->hasMany('App\Activitiy')
+        return $this->hasMany('App\Activitiy');
     }
     
     public function comments() {
-        return $this->hasMany('App\Comment')
+        return $this->hasMany('App\Comment');
     }
     
     public function applications() {
-        return $this->hasMany('App\Application')
+        return $this->hasMany('App\Application');
     }
     
     public function community_days() {
-        return $this->hasMany('App\CommunityDay')
+        return $this->hasMany('App\CommunityDay');
     }
     
-    //方法
+    /**
+     * 方法
+     */
+    
+    //超级管理员 拥有一切权限
     public function isSuperAdmin() {
         return $this->super_admin;
     }
     
+    //列出权限
+    public function powerShown() {
+        if ($this->banned) return "被封禁用户，权限有限。";
+            
+        $str = "拥有基础权限";
+
+        if ($this->sxyl_admin) $str.="、思想引领-主题教育";
+        if ($this->xxst_admin) $str.="、思想引领-学习社团";
+        if ($this->zttr_xtw) $str.="、基层团建-主题团日校团委";
+        if ($this->zttr_tzs) $str.="、基层团建-主题团日团支书";
+        if ($this->zttr_tgpx) $str.="、基层团建-团干培训";
+        if ($this->zttr_admin) $str.="、基层团建上级团组织";
+        if ($this->xywh_admin) $str.="、校园文化";
+        $str .= "相关权限。";
+        
+        return $str;
+    }
     //权限部分待补充
 }

@@ -20,10 +20,10 @@ class Activity extends Model
     }
     
     public function comments() {
-        return $this->hasMany('App\Comment')
+        return $this->hasMany('App\Comment');
     }
     
     public function applications() {
-        return $this->hasMany('App\Application')
+        return $this->hasMany('App\Application');
     }
 }

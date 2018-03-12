@@ -66,8 +66,13 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">主页</a>
-                        <a href="{{ route('logout') }}">登出</a>
+                        <a href="#">{{ Auth::user()->username }}</a>
+                        <a href="{{ url('/home') }}">登录页</a>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();">登出</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     @else
                         <a href="{{ route('login') }}">登录</a>
                         <a href="{{ route('register') }}">注册</a>
@@ -82,15 +87,32 @@
                 
                 <div class="test">
                 @auth
+                    <h3>当前登录用户:{{ Auth::user()->username }}</h3>
+                    <p>{{ Auth::user()->powerShown() }}</p>
                 @else
+                    <h3>预置用户名#密码</h3>
+
+                    <p>admin#admin 最高权限  </p>
+                    <p>demo#demo 默认注册用户  </p>
+                    <p>banned#banned 被封禁用户  </p>
+
+                    <p>以下为各种管理员用户</p>
+
+                    <p><p>sxyl_admin#123456  </p>
+                    <p>xxst_admin#123456  </p> 
+                    <p>zttr_xtw#123456  </p>
+                    <p>zttr_tzs#123456  </p>
+                    <p>zttr_tgpx#123456  </p>
+                    <p>zttr_admin#123456   </p>
+                    <p>xywh_admin#123456  </p>
                 @endauth
                 </div>
                 
                 <div class="test">
-                    <h2>测试数据:</h2>
-                    <p>Auth::user()->isSuperAdmin()
+                    <h3>测试数据:</h3>
+                    <p>Auth::user()->isSuperAdmin():
                     @auth 
-                        {{ Auth::user()->isSuperAdmin() }}
+                        {{ (Auth::user()->isSuperAdmin()) }}
                     @endauth
                     </p>
                 </div>
