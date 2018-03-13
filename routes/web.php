@@ -15,8 +15,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
-
+Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//活动类
+Route::resource('activity','ActivityController');
+
+//评论
+Route::post('/activity/{activity}/comment', 'CommentController@create')->name('comment.create');
+Route::put('/comment/{comment}', 'CommentController@update')->name('comment.update');
+Route::delete('/comment/{comment}', 'CommentController@delete')->name('comment.delete');

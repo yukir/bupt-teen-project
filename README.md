@@ -89,6 +89,28 @@ name 团日名称
 start_at 开始时间 可空  
 end_at 结束时间 可空  
 
+## 路由
+
+- 活动activity：CRUD结构
+
+GET    /activity 活动列表页  
+GET    /activity/create 创建活动页  
+POST   /activity 创建活动请求  
+GET    /activity/{activity} 某活动详情页  
+GET    /activity/{activity}/edit 某活动编辑页  
+PUT    /activity/{activity} 编辑某活动请求  
+DELETE /activity/{activity} 删除某活动请求  
+
+- 评论/反馈 comment:
+
+（评论增删改查均在活动内页采用AJAX）  
+POST   /activity/{activity}/comment 创建评论请求  
+PUT    /comment/{comment} 编辑某评论请求  
+DELETE /comment/{comment} 删除某评论请求  
+
+
+
+
 ## 需要向甲方问清楚的事情
 
 1. "活动反馈"的机制：反馈是否在活动结束之后才可提交；是否必须要参加活动才可提交；反馈是否公开给所有用户；若公开是否需要审核；    
