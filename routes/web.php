@@ -21,7 +21,9 @@ Auth::routes();
 //活动类
 Route::resource('activity','ActivityController');
 
-//签到签退
+//申请表相关
+Route::get('/activity/{activity}/application/{application}/sign_in', 'ApplicationController@signIn');
+Route::get('/activity/{activity}/application/{application}/sign_out', 'ApplicationController@signOut');
 Route::resource('/activity/{activity}/application', 'ApplicationController');
 
 //评论

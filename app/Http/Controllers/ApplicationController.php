@@ -84,4 +84,32 @@ class ApplicationController extends Controller
     {
         //
     }
+
+    /**
+     * Turn the 'sign_in' coloum of $applicationID to 1.
+     *
+     * @param  int  $activityID
+     * @param  int  $applicationID
+     * @return \Illuminate\Http\Response
+     */
+    public function signIn($activityID, $applicationID) {
+        $application = Application::find($applicationID);
+        $application->sign_in = 1;
+        $application->save();
+        return 1;
+    }
+
+    /**
+     * Turn the 'sign_out' coloum of $applicationID to 1.
+     *
+     * @param  int  $activityID
+     * @param  int  $applicationID
+     * @return \Illuminate\Http\Response
+     */
+    public function signOut($activityID, $applicationID) {
+        $application = Application::find($applicationID);
+        $application->sign_out = 1;
+        $application->save();
+        return 1;
+    }
 }
