@@ -21,6 +21,9 @@ Auth::routes();
 //活动类
 Route::resource('activity','ActivityController');
 
+//签到签退
+Route::resource('/activity/{activity}/application', 'ApplicationController');
+
 //评论
 Route::post('/activity/{activity}/comment', 'CommentController@create')->name('comment.create');
 Route::put('/comment/{comment}', 'CommentController@update')->name('comment.update');
