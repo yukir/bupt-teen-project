@@ -91,10 +91,10 @@ end_at 结束时间 可空
 
 ## 路由
 
-- 活动activity：CRUD结构
+- 活动activity：CRUD结构 + 活动类型
 
-GET    /activity 活动列表页  
-GET    /activity/create 创建活动页  
+GET    /activity?type={type} 活动列表页  
+GET    /activity/create?type={type} 创建活动页  
 POST   /activity 创建活动请求  
 GET    /activity/{activity} 某活动详情页  
 GET    /activity/{activity}/edit 某活动编辑页  

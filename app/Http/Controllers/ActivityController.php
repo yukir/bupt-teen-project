@@ -12,7 +12,7 @@ class ActivityController extends Controller
     
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['index','show']);
     }
     
     /**
@@ -24,15 +24,20 @@ class ActivityController extends Controller
     {
         //
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        $this->middleware('auth');
+        if(!$request->has('type')) abort(400);
+        
+        $this->authorize('createWithType',[\App\Activity::Class,$request->input('type')]);
+       
+        return view('activity.create', ['type' => $request->input('type')]);
+        
     }
 
     /**
@@ -41,12 +46,11 @@ class ActivityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    
-        $this->middleware('auth');
+    public function store(Request $request) 
+    {
     
         //活动表单后端验证
-        $validatedData = $request-validate([
+        $validatedData = $request->validate([
             'title' => 'required|string|max:191|unique:activities' ,
             'type' => [
                 'required',
@@ -60,7 +64,7 @@ class ActivityController extends Controller
 
         //权限后端验证
         if (auth()->user()->can('createWithType',$request->input('type'))) {
-            $a = new Activity($request->only['title','content','type','start_at','check_required','community_day_id']);
+            $a = new Activity($request->only(['title','content','type','start_at','check_required','community_day_id']));
             auth()->user()->activities()->save($a);
         } else abort(403);
         
