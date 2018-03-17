@@ -14,6 +14,7 @@
     <link href="{{ asset('css/materialize.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/materialize_font.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     
     @yield('css')
 </head>
@@ -25,6 +26,8 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        @include('layouts.partial.footer')
     </div>
 
     <!-- Scripts -->

@@ -13,7 +13,7 @@
 </ul>
 <nav>
     <div class="nav-wrapper container">
-        <a href="{{ config('app.url', '/') }}" class="brand-logo">{{ $title or config('app.name', 'Laravel') }}</a>
+        <a href="{{ config('app.url', '/') }}" class="brand-logo">{{ config('app.name', 'Laravel') }}</a>
         <ul class="right hide-on-med-and-down">
             @guest
             <li><a href="{{ route('login') }}">{{ __('登录') }}</a></li>
