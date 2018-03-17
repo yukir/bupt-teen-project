@@ -17,7 +17,10 @@ class ApplicationController extends Controller
     public function index($activityID)
     {
         $applications = Application::all()->where('activity_id', $activityID);
-        return view('activity.application.list', ['title' => '管理申请表']);
+        return view('activity.application.list', [
+            'title' => '管理申请表',
+            'applications' => $applications
+        ]);
     }
 
     /**

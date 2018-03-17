@@ -47069,7 +47069,7 @@ var render = function() {
             }
           ],
           staticClass: "filled-in",
-          attrs: { type: "checkbox", id: "approved-" + _vm.applicationID },
+          attrs: { type: "checkbox", id: "approved-" + _vm.applicationId },
           domProps: {
             checked: Array.isArray(_vm.isApproved)
               ? _vm._i(_vm.isApproved, null) > -1
@@ -47098,32 +47098,100 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _c("label", { attrs: { for: "approved-" + _vm.applicationID } })
+        _c("label", { attrs: { for: "approved-" + _vm.applicationId } })
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "action-button hide-on-small-only" }, [
         _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.isSignedIn,
+              expression: "isSignedIn"
+            }
+          ],
           staticClass: "filled-in",
-          attrs: { type: "checkbox", id: "sign-in-" + _vm.applicationID }
+          attrs: { type: "checkbox", id: "sign-in-" + _vm.applicationId },
+          domProps: {
+            checked: Array.isArray(_vm.isSignedIn)
+              ? _vm._i(_vm.isSignedIn, null) > -1
+              : _vm.isSignedIn
+          },
+          on: {
+            change: function($event) {
+              var $$a = _vm.isSignedIn,
+                $$el = $event.target,
+                $$c = $$el.checked ? true : false
+              if (Array.isArray($$a)) {
+                var $$v = null,
+                  $$i = _vm._i($$a, $$v)
+                if ($$el.checked) {
+                  $$i < 0 && (_vm.isSignedIn = $$a.concat([$$v]))
+                } else {
+                  $$i > -1 &&
+                    (_vm.isSignedIn = $$a
+                      .slice(0, $$i)
+                      .concat($$a.slice($$i + 1)))
+                }
+              } else {
+                _vm.isSignedIn = $$c
+              }
+            }
+          }
         }),
         _vm._v(" "),
-        _c("label", { attrs: { for: "sign-in-" + _vm.applicationID } })
+        _c("label", { attrs: { for: "sign-in-" + _vm.applicationId } })
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "action-button hide-on-small-only" }, [
         _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.isSignedOut,
+              expression: "isSignedOut"
+            }
+          ],
           staticClass: "filled-in",
-          attrs: { type: "checkbox", id: "sign-out-" + _vm.applicationID }
+          attrs: { type: "checkbox", id: "sign-out-" + _vm.applicationId },
+          domProps: {
+            checked: Array.isArray(_vm.isSignedOut)
+              ? _vm._i(_vm.isSignedOut, null) > -1
+              : _vm.isSignedOut
+          },
+          on: {
+            change: function($event) {
+              var $$a = _vm.isSignedOut,
+                $$el = $event.target,
+                $$c = $$el.checked ? true : false
+              if (Array.isArray($$a)) {
+                var $$v = null,
+                  $$i = _vm._i($$a, $$v)
+                if ($$el.checked) {
+                  $$i < 0 && (_vm.isSignedOut = $$a.concat([$$v]))
+                } else {
+                  $$i > -1 &&
+                    (_vm.isSignedOut = $$a
+                      .slice(0, $$i)
+                      .concat($$a.slice($$i + 1)))
+                }
+              } else {
+                _vm.isSignedOut = $$c
+              }
+            }
+          }
         }),
         _vm._v(" "),
-        _c("label", { attrs: { for: "sign-out-" + _vm.applicationID } })
+        _c("label", { attrs: { for: "sign-out-" + _vm.applicationId } })
       ]),
       _vm._v(" "),
       _c(
         "a",
         {
           staticClass: "action-button hide-on-med-and-up",
-          attrs: { href: _vm.approveURL }
+          attrs: { href: _vm.approveUrl }
         },
         [_vm._v("批准申请")]
       ),
@@ -47132,7 +47200,7 @@ var render = function() {
         "a",
         {
           staticClass: "action-button hide-on-med-and-up",
-          attrs: { href: _vm.signInURL }
+          attrs: { href: _vm.signInUrl }
         },
         [_vm._v("标记为已签到")]
       ),
@@ -47141,7 +47209,7 @@ var render = function() {
         "a",
         {
           staticClass: "action-button hide-on-med-and-up",
-          attrs: { href: _vm.signOutURL }
+          attrs: { href: _vm.signOutUrl }
         },
         [_vm._v("标记为已签退")]
       )
@@ -47198,13 +47266,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
         isApproved: Boolean,
+        isSignedIn: Boolean,
+        isSignedOut: Boolean,
         userLogo: String,
         userName: String,
-        applicationID: String,
-        approveURL: String,
-        signInURL: String,
-        signOutURL: String
-
+        activityId: String,
+        applicationId: String,
+        approveUrl: String,
+        signInUrl: String,
+        signOutUrl: String
     }
 });
 

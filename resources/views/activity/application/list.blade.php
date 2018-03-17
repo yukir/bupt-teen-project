@@ -12,55 +12,20 @@
         <div class="action-button">已签到</div>
         <div class="action-button">已签退</div>
     </div>
+    @foreach ($applications as $application)
     <application-card 
         user-logo="{{ asset('img/UserProfileTest.jpg') }}"
         user-name="LinkinYoung"
-        :is-approved="false"
+        :is-approved="{{ $application->status }}"
+        :is-signed-in="{{ $application->sign_in }}"
+        :is-signed-out="{{ $application->sign_out }}"
+        application-id="2"
+        activity-id="2"
+        approve-url="www.baidu.com"
+        sign-in-url="www.baidu.com"
+        sign-out-url="www.baidu.com"
     ></application-card>
-    <div class="hoverable application-list rejected">
-        <div class="user-logo">
-            <img src="{{ asset('img/UserProfileTest.jpg') }}" alt="" class="responsive-img circle">
-        </div>
-        <div class="">Linkin</div>
-        <div class="space-between"></div>
-        <div class="action-button hide-on-small-only">
-            <input type="checkbox" class="filled-in" id="filled-in-box1" />
-            <label for="filled-in-box1"></label>
-        </div>
-        <div class="action-button hide-on-small-only">
-            <input type="checkbox" class="filled-in" id="filled-in-box2" />
-            <label for="filled-in-box2"></label>
-        </div>
-        <div class="action-button hide-on-small-only">
-            <input type="checkbox" class="filled-in" id="filled-in-box3" />
-            <label for="filled-in-box3"></label>
-        </div>
-        <div class="action-button hide-on-med-and-up">批准申请</div>
-        <div class="action-button hide-on-med-and-up">标记为已签到</div>
-        <div class="action-button hide-on-med-and-up">标记为已签退</div>
-    </div>
-    <div class="hoverable application-list">
-        <div class="user-logo">
-            <img src="{{ asset('img/UserProfileTest.jpg') }}" alt="" class="responsive-img circle">
-        </div>
-        <div class="">Linkin</div>
-        <div class="space-between"></div>
-        <div class="action-button hide-on-small-only">
-            <input type="checkbox" class="filled-in" id="filled-in-box4" />
-            <label for="filled-in-box4"></label>
-        </div>
-        <div class="action-button hide-on-small-only">
-            <input type="checkbox" class="filled-in" id="filled-in-box5" />
-            <label for="filled-in-box5"></label>
-        </div>
-        <div class="action-button hide-on-small-only">
-            <input type="checkbox" class="filled-in" id="filled-in-box6" />
-            <label for="filled-in-box6"></label>
-        </div>
-        <div class="action-button hide-on-med-and-up">批准申请</div>
-        <div class="action-button hide-on-med-and-up">标记为已签到</div>
-        <div class="action-button hide-on-med-and-up">标记为已签退</div>
-    </div>
+    @endforeach
 </div>
 @endsection
 
