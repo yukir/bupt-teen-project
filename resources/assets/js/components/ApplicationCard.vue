@@ -1,7 +1,11 @@
 <template>
     <div class="hoverable application-list" :class="{ rejected: !isApproved }">
         <div class="user-logo">
-            <img :src="userLogo" alt="" class="responsive-img circle">
+            <avatar 
+                :username="userName"
+                :size="44"
+                :src="userLogo"
+            ></avatar>
         </div>
         <div class="">{{ userName }}</div>
         <div class="space-between"></div>
@@ -24,7 +28,12 @@
 </template>
 
 <script>
+import Avatar from 'vue-avatar'
+
 export default {
+    components: {
+        Avatar
+    },
     props: {
         isApproved: Boolean, 
         isSignedIn: Boolean,

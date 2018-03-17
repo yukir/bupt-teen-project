@@ -14,18 +14,31 @@
     </div>
     @foreach ($applications as $application)
     <application-card 
-        user-logo="{{ asset('img/UserProfileTest.jpg') }}"
-        user-name="LinkinYoung"
+        user-name="{{ $application->user->username }}"
         :is-approved="{{ $application->status }}"
         :is-signed-in="{{ $application->sign_in }}"
         :is-signed-out="{{ $application->sign_out }}"
-        application-id="2"
-        activity-id="2"
+        application-id="{{ $application->id }}"
+        activity-id="{{ $application->activity_id }}"
         approve-url="www.baidu.com"
         sign-in-url="www.baidu.com"
         sign-out-url="www.baidu.com"
     ></application-card>
     @endforeach
+    <application-card 
+        user-name="杨林青"
+        :is-approved="{{ $application->status }}"
+        :is-signed-in="{{ $application->sign_in }}"
+        :is-signed-out="{{ $application->sign_out }}"
+        application-id="{{ $application->id }}"
+        activity-id="{{ $application->activity_id }}"
+        approve-url="www.baidu.com"
+        sign-in-url="www.baidu.com"
+        sign-out-url="www.baidu.com"
+    ></application-card>
+    <avatar
+        username="Jane Doe"
+    ></avatar>
 </div>
 @endsection
 
