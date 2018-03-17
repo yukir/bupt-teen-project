@@ -5,7 +5,14 @@
 @section('content')
 <div class="container" id="application-list">
     <h3>{{ $title }}</h3>
-    <div class="hide-on-small-only application-list title">
+    <div id="list-title" class="hide-on-small-only application-list title">
+        <div class="">申请人</div>
+        <div class="space-between"></div>
+        <div class="action-button">批准</div>
+        <div class="action-button">已签到</div>
+        <div class="action-button">已签退</div>
+    </div>
+    <div id="list-title-hover" class="hide-on-small-only application-list title hide">
         <div class="">申请人</div>
         <div class="space-between"></div>
         <div class="action-button">批准</div>
@@ -26,7 +33,7 @@
     ></application-card>
     @endforeach
     <application-card 
-        user-name="杨林青"
+        user-name="杨林"
         :is-approved="{{ $application->status }}"
         :is-signed-in="{{ $application->sign_in }}"
         :is-signed-out="{{ $application->sign_out }}"

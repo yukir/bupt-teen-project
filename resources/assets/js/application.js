@@ -19,3 +19,14 @@ Vue.component('application-card', require('./components/ApplicationCard.vue'));
 const app = new Vue({
     el: '#application-list'
 });
+
+$(document).ready(() => {
+    $(document).scroll(() => {
+        $("#list-title-hover").width($('#list-title').width());
+        if ($(window).scrollTop() >= $('#list-title').offset().top) {
+            $("#list-title-hover").removeClass('hide');
+        } else {
+            $("#list-title-hover").addClass('hide');
+        }
+    })
+})

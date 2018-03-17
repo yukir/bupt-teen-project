@@ -17,6 +17,13 @@
   border-bottom: solid #e0e0e0 1px;
 }
 
+#list-title-hover {
+  position: fixed;
+  top: 0px;
+  background-color: white;
+  z-index: 700;
+}
+
 .application-list .user-logo {
   width: 44px;
   margin-right: 10px;
