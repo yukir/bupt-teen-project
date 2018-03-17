@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 38);
+/******/ 	return __webpack_require__(__webpack_require__.s = 45);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -46946,18 +46946,22 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 38 */
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(39);
-__webpack_require__(43);
-module.exports = __webpack_require__(44);
+module.exports = __webpack_require__(46);
 
 
 /***/ }),
-/* 39 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
-
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -46975,22 +46979,22 @@ window.Vue = __webpack_require__(34);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', __webpack_require__(40));
+Vue.component('application-card', __webpack_require__(47));
 
 var app = new Vue({
-  el: '#app'
+  el: '#application-list'
 });
 
 /***/ }),
-/* 40 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(37)
 /* script */
-var __vue_script__ = __webpack_require__(41)
+var __vue_script__ = __webpack_require__(54)
 /* template */
-var __vue_template__ = __webpack_require__(42)
+var __vue_template__ = __webpack_require__(48)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -47007,7 +47011,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/ExampleComponent.vue"
+Component.options.__file = "resources/assets/js/components/ApplicationCard.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -47016,9 +47020,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7168fb6a", Component.options)
+    hotAPI.createRecord("data-v-2c50d0ce", Component.options)
   } else {
-    hotAPI.reload("data-v-7168fb6a", Component.options)
+    hotAPI.reload("data-v-2c50d0ce", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -47029,7 +47033,138 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 41 */
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "hoverable application-list",
+      class: { rejected: !_vm.isApproved }
+    },
+    [
+      _c("div", { staticClass: "user-logo" }, [
+        _c("img", {
+          staticClass: "responsive-img circle",
+          attrs: { src: _vm.userLogo, alt: "" }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", {}, [_vm._v(_vm._s(_vm.userName))]),
+      _vm._v(" "),
+      _c("div", { staticClass: "space-between" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "action-button hide-on-small-only" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.isApproved,
+              expression: "isApproved"
+            }
+          ],
+          staticClass: "filled-in",
+          attrs: { type: "checkbox", id: "approved-" + _vm.applicationID },
+          domProps: {
+            checked: Array.isArray(_vm.isApproved)
+              ? _vm._i(_vm.isApproved, null) > -1
+              : _vm.isApproved
+          },
+          on: {
+            change: function($event) {
+              var $$a = _vm.isApproved,
+                $$el = $event.target,
+                $$c = $$el.checked ? true : false
+              if (Array.isArray($$a)) {
+                var $$v = null,
+                  $$i = _vm._i($$a, $$v)
+                if ($$el.checked) {
+                  $$i < 0 && (_vm.isApproved = $$a.concat([$$v]))
+                } else {
+                  $$i > -1 &&
+                    (_vm.isApproved = $$a
+                      .slice(0, $$i)
+                      .concat($$a.slice($$i + 1)))
+                }
+              } else {
+                _vm.isApproved = $$c
+              }
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("label", { attrs: { for: "approved-" + _vm.applicationID } })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "action-button hide-on-small-only" }, [
+        _c("input", {
+          staticClass: "filled-in",
+          attrs: { type: "checkbox", id: "sign-in-" + _vm.applicationID }
+        }),
+        _vm._v(" "),
+        _c("label", { attrs: { for: "sign-in-" + _vm.applicationID } })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "action-button hide-on-small-only" }, [
+        _c("input", {
+          staticClass: "filled-in",
+          attrs: { type: "checkbox", id: "sign-out-" + _vm.applicationID }
+        }),
+        _vm._v(" "),
+        _c("label", { attrs: { for: "sign-out-" + _vm.applicationID } })
+      ]),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "action-button hide-on-med-and-up",
+          attrs: { href: _vm.approveURL }
+        },
+        [_vm._v("批准申请")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "action-button hide-on-med-and-up",
+          attrs: { href: _vm.signInURL }
+        },
+        [_vm._v("标记为已签到")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "action-button hide-on-med-and-up",
+          attrs: { href: _vm.signOutURL }
+        },
+        [_vm._v("标记为已签退")]
+      )
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2c50d0ce", module.exports)
+  }
+}
+
+/***/ }),
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47050,67 +47185,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
+    props: {
+        isApproved: Boolean,
+        userLogo: String,
+        userName: String,
+        applicationID: String,
+        approveURL: String,
+        signInURL: String,
+        signOutURL: String
+
     }
 });
-
-/***/ }),
-/* 42 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card card-default" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
-          ])
-        ])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7168fb6a", module.exports)
-  }
-}
-
-/***/ }),
-/* 43 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 44 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

@@ -3,7 +3,7 @@
 <link href="{{ asset('css/application-list.css') }}" rel="stylesheet">
 
 @section('content')
-<div class="container">
+<div class="container" id="application-list">
     <h3>{{ $title }}</h3>
     <div class="hide-on-small-only application-list title">
         <div class="">申请人</div>
@@ -12,6 +12,11 @@
         <div class="action-button">已签到</div>
         <div class="action-button">已签退</div>
     </div>
+    <application-card 
+        user-logo="{{ asset('img/UserProfileTest.jpg') }}"
+        user-name="LinkinYoung"
+        :is-approved="false"
+    ></application-card>
     <div class="hoverable application-list rejected">
         <div class="user-logo">
             <img src="{{ asset('img/UserProfileTest.jpg') }}" alt="" class="responsive-img circle">
@@ -57,4 +62,8 @@
         <div class="action-button hide-on-med-and-up">标记为已签退</div>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script src="{{ asset('js/application.js') }}"></script>
 @endsection
