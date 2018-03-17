@@ -28,12 +28,9 @@
 </template>
 
 <script>
-import Avatar from 'vue-avatar'
+Vue.component('avatar', require('./Avatar.vue'));
 
 export default {
-    components: {
-        Avatar
-    },
     props: {
         isApproved: Boolean, 
         isSignedIn: Boolean,

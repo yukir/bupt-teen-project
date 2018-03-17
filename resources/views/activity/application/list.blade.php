@@ -36,9 +36,6 @@
         sign-in-url="www.baidu.com"
         sign-out-url="www.baidu.com"
     ></application-card>
-    <avatar
-        username="Jane Doe"
-    ></avatar>
 </div>
 @endsection
 
