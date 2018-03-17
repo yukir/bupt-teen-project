@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Activity;
 use App\Application;
+use App\TimestampToken;
 
 class ApplicationController extends Controller
 {
@@ -87,6 +88,8 @@ class ApplicationController extends Controller
 
     /**
      * Turn the 'sign_in' coloum of $applicationID to 1.
+     * 从 Web 访问时，可以为参与者和组织者分别展示签到用的二维码。
+     * 使用 AJAX 访问时，会返回操作结果。
      *
      * @param  int  $activityID
      * @param  int  $applicationID
@@ -101,6 +104,8 @@ class ApplicationController extends Controller
 
     /**
      * Turn the 'sign_out' coloum of $applicationID to 1.
+     * 从 Web 访问时，可以为参与者和组织者分别展示签到用的二维码。
+     * 使用 AJAX 访问时，会返回操作结果。
      *
      * @param  int  $activityID
      * @param  int  $applicationID
@@ -111,5 +116,75 @@ class ApplicationController extends Controller
         $application->sign_out = 1;
         $application->save();
         return 1;
+    }
+
+    /**
+     * Return an URL to sign in
+    */
+    public function signInURL($activityID, $applicationID) {
+        $token = new TimestampToken();
+        $token->id = rand();
+        $token->activity_id = $activityID;
+        $token->save();
+        return route('application.signInWithToken', [
+            'activity' => $activityID,
+            'application' => $applicationID,
+            'token' => $token->id
+        ]);
+    }
+
+    /**
+     * Return an URL to sign out
+    */
+    public function signOutURL($activityID, $applicationID) {
+        $token = new TimestampToken();
+        $token->id = rand();
+        $token->activity_id = $activityID;
+        $token->save();
+        return route('application.signOutWithToken', [
+            'activity' => $activityID,
+            'application' => $applicationID,
+            'token' => $token->id
+        ]);
+    }
+
+    /**
+     * 扫码签到。
+     * 只有参与者会从 Web 访问这个页面。
+    */
+    public function signInWithToken($activityID, $applicationID, $tokenID) {
+        $token = TimestampToken::find($tokenID);
+        if ($token == null) {
+            return "Failed2";
+        }
+        if ($token->created_at->diffInSeconds() > 10) {
+            $token->delete();
+            return "Failed";
+        } else {
+            $application = Application::find($applicationID);
+            $application->sign_in = 1;
+            $application->save();
+            return "🐱";
+        }
+    }
+
+    /**
+     * 扫码签到。
+     * 只有参与者会从 Web 访问这个页面。
+    */
+    public function signOutWithToken($activityID, $applicationID, $tokenID) {
+        $token = TimestampToken::find($tokenID);
+        if ($token == null) {
+            return "Failed2";
+        }
+        if ($token->created_at->diffInSeconds() > 10) {
+            $token->delete();
+            return "Failed";
+        } else {
+            $application = Application::find($applicationID);
+            $application->sign_out = 1;
+            $application->save();
+            return "🐱";
+        }
     }
 }

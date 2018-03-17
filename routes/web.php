@@ -24,6 +24,10 @@ Route::resource('activity','ActivityController');
 //申请表相关
 Route::get('/activity/{activity}/application/{application}/sign_in', 'ApplicationController@signIn');
 Route::get('/activity/{activity}/application/{application}/sign_out', 'ApplicationController@signOut');
+Route::get('/activity/{activity}/application/{application}/sign_in_url', 'ApplicationController@signInURL');
+Route::get('/activity/{activity}/application/{application}/sign_out_url', 'ApplicationController@signOutURL');
+Route::get('/activity/{activity}/application/{application}/sign_in/{token}', 'ApplicationController@signInWithToken')->name('application.signInWithToken');
+Route::get('/activity/{activity}/application/{application}/sign_out/{token}', 'ApplicationController@signOutWithToken')->name('application.signOutWithToken');
 Route::resource('/activity/{activity}/application', 'ApplicationController');
 
 //评论

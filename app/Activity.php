@@ -26,4 +26,8 @@ class Activity extends Model
     public function applications() {
         return $this->hasMany('App\Application');
     }
+
+    public function timestamp_tokens() {
+        return $this->hasMany('App\TimestampToken');
+    }
 }
