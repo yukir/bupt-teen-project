@@ -13,9 +13,12 @@ class ActivityPolicy
     
     public function before($user, $ability)
     {
-        if ($user->isSuperAdmin()) {
+        if ($user->isSuperAdmin()) 
             return true;
-        }
+        
+        if ($user->banned) 
+            return false;
+        
 
     }
     
@@ -28,8 +31,7 @@ class ActivityPolicy
      */
     public function view(User $user, Activity $activity)
     {
-        
-        //
+        return true;
     }
     /**
      * 用户是否有创建活动的权利
@@ -42,12 +44,12 @@ class ActivityPolicy
     public function createWithType(User $user,$type)
     {
 
-        if ($user->sxyl_admin && $type->type == "sxyl") return true;
-        if ($user->xxst_admin && ($type->type == "yxtx" || $type->type == "mzy")) return true;
-        if (($user->zttr_admin || $user->zttr_tzs ) && $type->type == "zttr") return true;
+        if ($user->sxyl_admin && $type == "sxyl") return true;
+        if ($user->xxst_admin && ($type == "yxtx" || $type == "mzy")) return true;
+        if (($user->zttr_admin || $user->zttr_tzs ) && $type == "zttr") return true;
             
-        if ($user->zttr_tgpx && $type->type == "tgpx") return true;
-        if ($user->xywh_admin && $type->type == "xywh") return true;
+        if ($user->zttr_tgpx && $type == "tgpx") return true;
+        if ($user->xywh_admin && $type == "xywh") return true;
         
         return false;
     }

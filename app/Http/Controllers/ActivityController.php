@@ -22,7 +22,7 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        //
+        dd(1);
     }
     
     /**
@@ -49,6 +49,7 @@ class ActivityController extends Controller
     public function store(Request $request) 
     {
     
+        dd(123);
         //活动表单后端验证
         $validatedData = $request->validate([
             'title' => 'required|string|max:191|unique:activities' ,
@@ -59,14 +60,18 @@ class ActivityController extends Controller
             'content' => 'required|max:65535',
             'start_at' => 'nullable|date|after:yesterday',
             'check_required' => 'required|boolean',
-            'community_day_id' => 'nullable|numeric'
+            'community_day_id' => 'nullable|numeric',
         ]);
 
         //权限后端验证
-        if (auth()->user()->can('createWithType',$request->input('type'))) {
-            $a = new Activity($request->only(['title','content','type','start_at','check_required','community_day_id']));
-            auth()->user()->activities()->save($a);
-        } else abort(403);
+        $this->authorize('createWithType',[\App\Activity::Class,$request->input('type')]);
+            
+        $a = new Activity($request->only(['title','content','type','start_at','check_required','community_day_id']));
+        auth()->user()->activities()->save($a);
+        
+        dd($a);
+        
+        return redirect()->route('activities.show',['activity' => $a->id]);
         
     }
 
@@ -78,7 +83,9 @@ class ActivityController extends Controller
      */
     public function show(Activity $activity)
     {
-        //
+        $this->authorize('view',$activity);
+        
+        return view('activity.show', ['activity' => $activity]);
     }
 
     /**

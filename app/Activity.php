@@ -26,4 +26,18 @@ class Activity extends Model
     public function applications() {
         return $this->hasMany('App\Application');
     }
+    
+    //类型翻译
+    public static function type_name($str) {
+        $strArr = [
+            "sxyl" => "思想引领",  
+            "yxtx" => "雁翔团校",  
+            "mzy"  => "梦之翼",  
+            "zttr" => "主题团日",  
+            "tgpx" => "团干培训",  
+            "xywh" => "校园文化",  
+        ];
+        if (array_key_exists($str,$strArr)) return $strArr[$str];
+        return $str;
+    }
 }

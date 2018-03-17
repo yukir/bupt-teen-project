@@ -123,6 +123,7 @@ DELETE /comment/{comment} 删除某评论请求
 - [用户认证](https://laravel-china.org/docs/laravel/5.6/authentication)
 - [权限](https://laravel-china.org/docs/laravel/5.6/authorization)
 - [前端](https://laravel-china.org/docs/laravel/5.6/blade)
+- [前端采用框架Materialize](http://materializecss.com/)
 
 
 ## License

@@ -16,7 +16,7 @@
                 </span>
             @endif
         </div> 
-        <p>活动分类:{{ $type }}</p>
+        <p>活动分类:{{ \App\Activity::type_name($type) }}</p>
         <div id="content_wang">
             {{ old('content') }}
         </div>
