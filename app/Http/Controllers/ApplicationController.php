@@ -14,9 +14,9 @@ class ApplicationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($activityID)
+    public function index(Activity $activity)
     {
-        $applications = Application::all()->where('activity_id', $activityID);
+        $applications = $activity->applications;
         return view('activity.application.list', [
             'title' => '管理申请表',
             'applications' => $applications
@@ -98,8 +98,7 @@ class ApplicationController extends Controller
      * @param  int  $applicationID
      * @return \Illuminate\Http\Response
      */
-    public function signIn($applicationID) {
-        $application = Application::find($applicationID);
+    public function signIn(Application $application) {
         $application->sign_in = 1;
         $application->save();
         return 1;
@@ -114,39 +113,36 @@ class ApplicationController extends Controller
      * @param  int  $applicationID
      * @return \Illuminate\Http\Response
      */
-    public function signOut($applicationID) {
-        $application = Application::find($applicationID);
+    public function signOut(Application $application) {
         $application->sign_out = 1;
         $application->save();
         return 1;
     }
 
     /**
-     * Return an URL to sign in
+     * Return an URL to sign in. 只允许 AJAX 访问。
     */
-    public function signInURL($applicationID) {
+    public function signInURL(Application $application) {
         $token = new TimestampToken();
-        $application = Application::find($applicationID);
         $token->id = rand();
-        $token->activity_id = $application->activity->id;
+        $token->activity_id = $application->activity_id;
         $token->save();
         return route('application.signInWithToken', [
-            'application' => $applicationID,
+            'application' => $application,
             'token' => $token->id
         ]);
     }
 
     /**
-     * Return an URL to sign out
+     * Return an URL to sign out. 只允许 AJAX 访问。
     */
-    public function signOutURL($activityID, $applicationID) {
+    public function signOutURL(Application $application) {
         $token = new TimestampToken();
-        $application = Application::find($applicationID);
         $token->id = rand();
-        $token->activity_id = $application->activity->id;
+        $token->activity_id = $application->activity_id;
         $token->save();
         return route('application.signOutWithToken', [
-            'application' => $applicationID,
+            'application' => $application,
             'token' => $token->id
         ]);
     }
@@ -155,7 +151,7 @@ class ApplicationController extends Controller
      * 扫码签到。
      * 只有参与者会从 Web 访问这个页面。
     */
-    public function signInWithToken($applicationID, $tokenID) {
+    public function signInWithToken(Application $application, $tokenID) {
         $token = TimestampToken::find($tokenID);
         if ($token == null) {
             return "Failed2";
@@ -164,7 +160,6 @@ class ApplicationController extends Controller
             $token->delete();
             return "Failed";
         } else {
-            $application = Application::find($applicationID);
             $application->sign_in = 1;
             $application->save();
             return "🐱";
@@ -172,10 +167,10 @@ class ApplicationController extends Controller
     }
 
     /**
-     * 扫码签到。
+     * 扫码签退。
      * 只有参与者会从 Web 访问这个页面。
     */
-    public function signOutWithToken($applicationID, $tokenID) {
+    public function signOutWithToken(Application $application, $tokenID) {
         $token = TimestampToken::find($tokenID);
         if ($token == null) {
             return "Failed2";
@@ -184,7 +179,6 @@ class ApplicationController extends Controller
             $token->delete();
             return "Failed";
         } else {
-            $application = Application::find($applicationID);
             $application->sign_out = 1;
             $application->save();
             return "🐱";

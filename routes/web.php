@@ -22,12 +22,12 @@ Auth::routes();
 Route::resource('activity','ActivityController');
 
 //申请表相关
-Route::get('/application/{application}/sign_in', 'ApplicationController@signIn');
-Route::get('/application/{application}/sign_out', 'ApplicationController@signOut');
-Route::get('/application/{application}/sign_in_url', 'ApplicationController@signInURL');
-Route::get('/application/{application}/sign_out_url', 'ApplicationController@signOutURL');
-Route::get('/application/{application}/sign_in/{token}', 'ApplicationController@signInWithToken')->name('application.signInWithToken');
-Route::get('/application/{application}/sign_out/{token}', 'ApplicationController@signOutWithToken')->name('application.signOutWithToken');
+Route::get('/application/{application}/sign-in', 'ApplicationController@signIn')->name('application.signIn');
+Route::get('/application/{application}/sign-out', 'ApplicationController@signOut')->name('application.signOut');
+Route::get('/application/{application}/sign-in-url', 'ApplicationController@signInURL');
+Route::get('/application/{application}/sign-out-url', 'ApplicationController@signOutURL');
+Route::get('/application/{application}/sign-in/{token}', 'ApplicationController@signInWithToken')->name('application.signInWithToken');
+Route::get('/application/{application}/sign-out/{token}', 'ApplicationController@signOutWithToken')->name('application.signOutWithToken');
 Route::resource('/activity/{activity}/application', 'ApplicationController');
 
 //评论
