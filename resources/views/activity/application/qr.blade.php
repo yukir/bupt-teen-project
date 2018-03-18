@@ -17,8 +17,15 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+    </style>
     <div id="app">
-        <qr-display value="LinkinYoung"></qr-display>
+        <div id="qrcode" value="LinkinYoung" :size="500"></div>
     </div>
 
     <!-- Scripts -->
