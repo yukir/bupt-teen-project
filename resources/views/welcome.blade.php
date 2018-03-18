@@ -8,6 +8,9 @@
         <title>Laravel</title>
 
         <!-- Styles -->
+        <link href="{{ asset('css/materialize.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/materialize_font.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/main.css') }}" rel="stylesheet">
         <style>
             html, body {
                 background-color: #fff;
@@ -119,6 +122,8 @@
             </div>
 
         </div>
-        <script src="/js/app.js"></script>
+        <script src="{{ asset('js/jquery-2.2.3.min.js') }}"></script>
+        <script src="{{ asset('js/materialize.min.js') }}"></script> 
+        <script src="{{ asset('js/main.js') }}"></script> 
     </body>
 </html>

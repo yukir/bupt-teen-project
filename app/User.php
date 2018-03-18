@@ -43,6 +43,8 @@ class User extends Authenticatable
         return $this->super_admin;
     }
     
+    //拥有团员信息管理权限 
+    
     //列出权限
     public function powerShown() {
         if ($this->banned) return "被封禁用户，权限有限。";

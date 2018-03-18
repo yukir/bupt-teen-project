@@ -20,9 +20,18 @@ class ActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        dd(1);
+        if(!$request->has('type')) abort(400);
+        
+        $this->authorize('viewList',[\App\Activity::Class,$request->input('type')]);
+        
+        $activities = Activity::where('type',$request->input('type'))->orderBy('created_at', 'desc')->take(30);
+        
+        return view('activity.list', [
+            'type' => $request->input('type'),
+            'activities' => $activities,
+        ]);
     }
     
     /**

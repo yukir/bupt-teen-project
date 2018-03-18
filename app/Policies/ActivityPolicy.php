@@ -18,18 +18,23 @@ class ActivityPolicy
         
         if ($user->banned) 
             return false;
-        
 
     }
     
     /**
-     * Determine whether the user can view the activity.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Activity  $activity
-     * @return mixed
+     * 用户是否拥有浏览某个活动的权利
+     * 需求待应答
      */
     public function view(User $user, Activity $activity)
+    {
+        return true;
+    }
+    
+    /**
+     * 用户是否拥有浏览某类活动列表的权利
+     * 需求待应答
+     */
+    public function viewList(User $user, $type)
     {
         return true;
     }
