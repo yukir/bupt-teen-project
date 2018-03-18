@@ -117,7 +117,7 @@ class ApplicationController extends Controller
             return response()->json(true);
         }
         
-        return "请让组织者扫描此二维码来签到";
+        return view('activity.application.qr');
     }
 
     /**
