@@ -14,7 +14,7 @@
             <label :for="'approved-' + applicationId"></label>
         </div>
         <div class="action-button hide-on-small-only">
-            <input type="checkbox" class="filled-in" :id="'sign-in-' + applicationId" v-model="isSignedIn" />
+            <input type="checkbox" class="filled-in" :id="'sign-in-' + applicationId" v-model="isSignedIn" @change="signedInButtonAction" />
             <label :for="'sign-in-' + applicationId"></label>
         </div>
         <div class="action-button hide-on-small-only">
@@ -42,6 +42,20 @@ export default {
         approveUrl: String, 
         signInUrl: String, 
         signOutUrl: String
+    },
+    methods: {
+        signedInButtonAction: function () {
+            var self = this;
+            if (this.isSignedIn) {
+                axios.get(this.signInUrl)
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
+        }
     }
 }
 </script>

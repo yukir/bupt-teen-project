@@ -32822,6 +32822,18 @@ Vue.component('avatar', __webpack_require__(47));
         approveUrl: String,
         signInUrl: String,
         signOutUrl: String
+    },
+    methods: {
+        signedInButtonAction: function signedInButtonAction() {
+            var self = this;
+            if (this.isSignedIn) {
+                axios.get(this.signInUrl).then(function (response) {
+                    console.log(response);
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        }
     }
 });
 
@@ -33141,25 +33153,28 @@ var render = function() {
               : _vm.isSignedIn
           },
           on: {
-            change: function($event) {
-              var $$a = _vm.isSignedIn,
-                $$el = $event.target,
-                $$c = $$el.checked ? true : false
-              if (Array.isArray($$a)) {
-                var $$v = null,
-                  $$i = _vm._i($$a, $$v)
-                if ($$el.checked) {
-                  $$i < 0 && (_vm.isSignedIn = $$a.concat([$$v]))
+            change: [
+              function($event) {
+                var $$a = _vm.isSignedIn,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 && (_vm.isSignedIn = $$a.concat([$$v]))
+                  } else {
+                    $$i > -1 &&
+                      (_vm.isSignedIn = $$a
+                        .slice(0, $$i)
+                        .concat($$a.slice($$i + 1)))
+                  }
                 } else {
-                  $$i > -1 &&
-                    (_vm.isSignedIn = $$a
-                      .slice(0, $$i)
-                      .concat($$a.slice($$i + 1)))
+                  _vm.isSignedIn = $$c
                 }
-              } else {
-                _vm.isSignedIn = $$c
-              }
-            }
+              },
+              _vm.signedInButtonAction
+            ]
           }
         }),
         _vm._v(" "),

@@ -29,8 +29,8 @@
         application-id="{{ $application->id }}"
         activity-id="{{ $application->activity_id }}"
         approve-url="www.baidu.com"
-        sign-in-url="{{ route('application.signIn', ['application' => $application->id]) }}"
-        sign-out-url="{{ route('application.signOut', ['application' => $application->id]) }}"
+        sign-in-url="{{ route('application.signIn', [$application]) }}"
+        sign-out-url="{{ route('application.signOut', [$application]) }}"
     ></application-card>
     @endforeach
 </div>

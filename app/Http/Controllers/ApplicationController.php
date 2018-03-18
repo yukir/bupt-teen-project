@@ -91,17 +91,21 @@ class ApplicationController extends Controller
 
     /**
      * Turn the 'sign_in' coloum of $applicationID to 1.
-     * 从 Web 访问时，可以为参与者和组织者分别展示签到用的二维码。
-     * 使用 AJAX 访问时，会返回操作结果。
+     * 从 Web 访问时，可以为参与者展示签到用的二维码。
+     * 使用 AJAX 访问时，会返回操作结果。只有组织者有权限从 AJAX 访问。
      *
      * @param  int  $activityID
      * @param  int  $applicationID
      * @return \Illuminate\Http\Response
      */
-    public function signIn(Application $application) {
-        $application->sign_in = 1;
-        $application->save();
-        return 1;
+    public function signIn(Request $request, Application $application) {
+        if($request->ajax()){
+            $application->sign_in = 1;
+            $application->save();
+            return response()->json(true);
+        }
+        
+        return "请让组织者扫描此二维码来签到";
     }
 
     /**
