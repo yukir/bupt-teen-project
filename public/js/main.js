@@ -13,10 +13,14 @@ $(function(){
         }
         return "";
     }
+
     if (Request("type")!="" && $(".active_check").length>0) {
         var $type = Request("type");
         $(".active_check").each(function(){
-            //TODO
+            //console.log($type);
+            if($.inArray($type, ["sxyl","yxtx","mzy"])>=0) $(this).children(".sxyl_li").addClass("active");
+            else if($.inArray($type, ["zttr","tgpx"])>=0) $(this).children(".jctj_li").addClass("active");
+            else if($type == "xywh") $(this).children(".xywh_li").addClass("active");
         });
     }
     

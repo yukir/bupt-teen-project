@@ -7,3 +7,9 @@
     position: static!important;
     padding-right:8px!important;
 }
+.active_check_sub .indicator {
+    display: none;
+}
+html, body { 
+    font-family: 'Microsoft Yahei','Microsoft YaHei','微软雅黑',微软雅黑,'Simhei','SimHei',黑体,'黑体',sans-serif;
+}

@@ -35,15 +35,15 @@
     </li>
 </ul>
 @endauth
-<nav>
+<nav class="nav-extended">
     <div class="nav-wrapper container">
         
         <ul class="left hide-on-med-and-down active_check">
             <li><a href="{{ config('app.url', '/') }}" class="brand-logo">{{ $title or config('app.name', 'Laravel') }}</a></li>
             @auth
-            <li><a class="dropdown-button" href="#!" data-activates="dropdown_sxyl">思想引领<i class="material-icons right" style="margin-left:2px;">arrow_drop_down</i></a></li>
-            <li><a class="dropdown-button" href="#!" data-activates="dropdown_jctj">基层团建<i class="material-icons right" style="margin-left:2px;">arrow_drop_down</i></a></li>
-            <li><a class="dropdown-button" href="#!" data-activates="dropdown_xywh">校园文化<i class="material-icons right" style="margin-left:2px;">arrow_drop_down</i></a></li>
+            <li class="sxyl_li"><a class="dropdown-button" href="#!" data-activates="dropdown_sxyl">思想引领<i class="material-icons right" style="margin-left:2px;">arrow_drop_down</i></a></li>
+            <li class="jctj_li"><a class="dropdown-button" href="#!" data-activates="dropdown_jctj">基层团建<i class="material-icons right" style="margin-left:2px;">arrow_drop_down</i></a></li>
+            <li class="xywh_li"><a class="dropdown-button" href="#!" data-activates="dropdown_xywh">校园文化<i class="material-icons right" style="margin-left:2px;">arrow_drop_down</i></a></li>
             @endauth
         </ul>
         <ul class="right hide-on-med-and-down">
@@ -55,4 +55,14 @@
             @endguest
         </ul>
     </div>
+    @if (isset($extended_nav) && $extended_nav)
+    <div class="nav-content container">
+        <ul class="tabs tabs-transparent active_check_sub">
+            <li class="tab {{ Route::currentRouteName()=='activity.index' ? 'active' : '' }}" ><a href="/activity?type={{ $type }}">活动列表</a></li>
+            @can('createWithType',[\App\Activity::Class,$type])
+            <li class="tab {{ Route::currentRouteName()=='activity.create' ? 'active' : '' }}"><a href="/activity/create?type={{ $type }}">发布活动</a></li>
+            @endcan
+        </ul>
+    </div>
+    @endif
 </nav>

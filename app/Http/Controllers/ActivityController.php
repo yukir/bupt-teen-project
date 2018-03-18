@@ -24,11 +24,14 @@ class ActivityController extends Controller
     {
         if(!$request->has('type')) abort(400);
         
-        $this->authorize('viewList',[\App\Activity::Class,$request->input('type')]);
+        $type = $request->input('type');
+        $this->authorize('viewList',[\App\Activity::Class,$type]);
         
-        $activities = Activity::where('type',$request->input('type'))->orderBy('created_at', 'desc')->take(30);
+        $activities = Activity::where('type',$type)->orderBy('created_at', 'desc')->take(30)->get();
         
         return view('activity.list', [
+            'main_title' => Activity::type_name($type).'活动列表',
+            'extended_nav' => 1,
             'type' => $request->input('type'),
             'activities' => $activities,
         ]);
@@ -43,9 +46,15 @@ class ActivityController extends Controller
     {
         if(!$request->has('type')) abort(400);
         
+        $type = $request->input('type');
+        
         $this->authorize('createWithType',[\App\Activity::Class,$request->input('type')]);
        
-        return view('activity.create', ['type' => $request->input('type')]);
+        return view('activity.create', [
+            'main_title' => Activity::type_name($type).'活动 - 创建',
+            'extended_nav' => 1,
+            'type' => $type,
+        ]);
         
     }
 
@@ -91,7 +100,12 @@ class ActivityController extends Controller
     {
         $this->authorize('view',$activity);
         
-        return view('activity.show', ['activity' => $activity]);
+        return view('activity.show', [
+            'main_title' => $activity->title,
+            'extended_nav' => 1,
+            'type' => $activity->type,
+            'activity' => $activity,
+        ]);
     }
 
     /**

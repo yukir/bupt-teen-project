@@ -65,7 +65,7 @@ class ActivityPolicy
      */
     public function update(User $user,Activity $activity)
     {
-
+        
         return true;
         //return $user->id == $activity->user_id;
     }
