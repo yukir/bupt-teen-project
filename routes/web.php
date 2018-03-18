@@ -22,13 +22,14 @@ Auth::routes();
 Route::resource('activity','ActivityController');
 
 //申请表相关
+Route::get('/activity/{activity}/application', 'ApplicationController@index');
 Route::get('/application/{application}/sign-in', 'ApplicationController@signIn')->name('application.signIn');
 Route::get('/application/{application}/sign-out', 'ApplicationController@signOut')->name('application.signOut');
 Route::get('/application/{application}/sign-in-url', 'ApplicationController@signInURL');
 Route::get('/application/{application}/sign-out-url', 'ApplicationController@signOutURL');
 Route::get('/application/{application}/sign-in/{token}', 'ApplicationController@signInWithToken')->name('application.signInWithToken');
 Route::get('/application/{application}/sign-out/{token}', 'ApplicationController@signOutWithToken')->name('application.signOutWithToken');
-Route::resource('/activity/{activity}/application', 'ApplicationController');
+Route::resource('/application', 'ApplicationController', ['except' => ['index']]);
 
 //评论
 Route::post('/activity/{activity}/comment', 'CommentController@create')->name('comment.create');

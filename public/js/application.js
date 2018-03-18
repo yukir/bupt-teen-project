@@ -32828,7 +32828,37 @@ Vue.component('avatar', __webpack_require__(47));
             var self = this;
             if (this.isSignedIn) {
                 axios.get(this.signInUrl).then(function (response) {
-                    console.log(response);
+                    self.isSignedIn = response.data;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        },
+        signedOutButtonAction: function signedOutButtonAction() {
+            var self = this;
+            if (this.isSignedOut) {
+                axios.get(this.signOutUrl).then(function (response) {
+                    self.isSignedOut = response.data;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        },
+        signedInLinkAction: function signedInLinkAction() {
+            var self = this;
+            if (!this.isSignedIn) {
+                axios.get(this.signInUrl).then(function (response) {
+                    self.isSignedIn = response.data;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        },
+        signedOutLinkAction: function signedOutLinkAction() {
+            var self = this;
+            if (!this.isSignedOut) {
+                axios.get(this.signOutUrl).then(function (response) {
+                    self.isSignedOut = response.data;
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -33199,25 +33229,28 @@ var render = function() {
               : _vm.isSignedOut
           },
           on: {
-            change: function($event) {
-              var $$a = _vm.isSignedOut,
-                $$el = $event.target,
-                $$c = $$el.checked ? true : false
-              if (Array.isArray($$a)) {
-                var $$v = null,
-                  $$i = _vm._i($$a, $$v)
-                if ($$el.checked) {
-                  $$i < 0 && (_vm.isSignedOut = $$a.concat([$$v]))
+            change: [
+              function($event) {
+                var $$a = _vm.isSignedOut,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 && (_vm.isSignedOut = $$a.concat([$$v]))
+                  } else {
+                    $$i > -1 &&
+                      (_vm.isSignedOut = $$a
+                        .slice(0, $$i)
+                        .concat($$a.slice($$i + 1)))
+                  }
                 } else {
-                  $$i > -1 &&
-                    (_vm.isSignedOut = $$a
-                      .slice(0, $$i)
-                      .concat($$a.slice($$i + 1)))
+                  _vm.isSignedOut = $$c
                 }
-              } else {
-                _vm.isSignedOut = $$c
-              }
-            }
+              },
+              _vm.signedOutButtonAction
+            ]
           }
         }),
         _vm._v(" "),
@@ -33228,7 +33261,7 @@ var render = function() {
         "a",
         {
           staticClass: "action-button hide-on-med-and-up",
-          attrs: { href: _vm.approveUrl }
+          attrs: { href: "#!" }
         },
         [_vm._v("批准申请")]
       ),
@@ -33237,7 +33270,8 @@ var render = function() {
         "a",
         {
           staticClass: "action-button hide-on-med-and-up",
-          attrs: { href: _vm.signInUrl }
+          attrs: { href: "#!" },
+          on: { click: _vm.signedInLinkAction }
         },
         [_vm._v("标记为已签到")]
       ),
@@ -33246,7 +33280,8 @@ var render = function() {
         "a",
         {
           staticClass: "action-button hide-on-med-and-up",
-          attrs: { href: _vm.signOutUrl }
+          attrs: { href: "#!" },
+          on: { click: _vm.signedOutLinkAction }
         },
         [_vm._v("标记为已签退")]
       )

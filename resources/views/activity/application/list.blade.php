@@ -23,9 +23,9 @@
     <application-card 
         user-logo="{{ $application->user->avatar }}"
         user-name="{{ $application->user->username }}"
-        :is-approved="{{ $application->status }}"
-        :is-signed-in="{{ $application->sign_in }}"
-        :is-signed-out="{{ $application->sign_out }}"
+        :is-approved="Boolean({{ $application->status }})"
+        :is-signed-in="Boolean({{ $application->sign_in }})"
+        :is-signed-out="Boolean({{ $application->sign_out }})"
         application-id="{{ $application->id }}"
         activity-id="{{ $application->activity_id }}"
         approve-url="www.baidu.com"

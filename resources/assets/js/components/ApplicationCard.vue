@@ -18,12 +18,12 @@
             <label :for="'sign-in-' + applicationId"></label>
         </div>
         <div class="action-button hide-on-small-only">
-            <input type="checkbox" class="filled-in" :id="'sign-out-' + applicationId" v-model="isSignedOut" />
+            <input type="checkbox" class="filled-in" :id="'sign-out-' + applicationId" v-model="isSignedOut" @change="signedOutButtonAction" />
             <label :for="'sign-out-' + applicationId"></label>
         </div>
-        <a class="action-button hide-on-med-and-up" :href="approveUrl">批准申请</a>
-        <a class="action-button hide-on-med-and-up" :href="signInUrl">标记为已签到</a>
-        <a class="action-button hide-on-med-and-up" :href="signOutUrl">标记为已签退</a>
+        <a class="action-button hide-on-med-and-up" href="#!">批准申请</a>
+        <a class="action-button hide-on-med-and-up" href="#!" @click="signedInLinkAction" >标记为已签到</a>
+        <a class="action-button hide-on-med-and-up" href="#!" @click="signedOutLinkAction" >标记为已签退</a>
     </div>
 </template>
 
@@ -49,7 +49,43 @@ export default {
             if (this.isSignedIn) {
                 axios.get(this.signInUrl)
                 .then(function (response) {
-                    console.log(response);
+                    self.isSignedIn = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
+        },
+        signedOutButtonAction: function () {
+            var self = this;
+            if (this.isSignedOut) {
+                axios.get(this.signOutUrl)
+                .then(function (response) {
+                    self.isSignedOut = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
+        },
+        signedInLinkAction: function () {
+            var self = this;
+            if (!this.isSignedIn) {
+                axios.get(this.signInUrl)
+                .then(function (response) {
+                    self.isSignedIn = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
+        },
+        signedOutLinkAction: function () {
+            var self = this;
+            if (!this.isSignedOut) {
+                axios.get(this.signOutUrl)
+                .then(function (response) {
+                    self.isSignedOut = response.data;
                 })
                 .catch(function (error) {
                     console.log(error);

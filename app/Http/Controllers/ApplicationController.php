@@ -75,7 +75,7 @@ class ApplicationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return response()->json(true);
     }
 
     /**
@@ -94,8 +94,6 @@ class ApplicationController extends Controller
      * 从 Web 访问时，可以为参与者展示签到用的二维码。
      * 使用 AJAX 访问时，会返回操作结果。只有组织者有权限从 AJAX 访问。
      *
-     * @param  int  $activityID
-     * @param  int  $applicationID
      * @return \Illuminate\Http\Response
      */
     public function signIn(Request $request, Application $application) {
@@ -113,14 +111,16 @@ class ApplicationController extends Controller
      * 从 Web 访问时，可以为参与者和组织者分别展示签到用的二维码。
      * 使用 AJAX 访问时，会返回操作结果。
      *
-     * @param  int  $activityID
-     * @param  int  $applicationID
      * @return \Illuminate\Http\Response
      */
-    public function signOut(Application $application) {
-        $application->sign_out = 1;
-        $application->save();
-        return 1;
+    public function signOut(Request $request, Application $application) {
+        if($request->ajax()){
+            $application->sign_out = 1;
+            $application->save();
+            return response()->json(true);
+        }
+        
+        return "请让组织者扫描此二维码来签退";
     }
 
     /**
