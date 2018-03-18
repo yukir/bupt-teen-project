@@ -6,25 +6,46 @@
 @stop
 @section('content')
 <div class="container">
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <form method="POST" action="{{ route('activity.store') }}">
+        @csrf
         <div class="input-field">
             <input id="title" type="text" class="validate {{ $errors->has('title') ? ' invalid' : '' }}" name="title" value="{{ old('title') }}" required autofocus>
             <label for="title">活动标题</label>
-            @if ($errors->has('username'))
+            @if ($errors->has('title'))
                 <span class="invalid-feedback">
-                    <strong>{{ $errors->first('username') }}</strong>
+                    <strong>{{ $errors->first('title') }}</strong>
                 </span>
             @endif
         </div> 
+        <input type="hidden" name="type" value="{{ $type }}">
         <p>活动分类:{{ \App\Activity::type_name($type) }}</p>
         <div id="content_wang">
-            {{ old('content') }}
+            {!! old('content') !!}
         </div>
+        @if ($errors->has('content'))
+            <span class="invalid-feedback">
+                <strong>{{ $errors->first('content') }}</strong>
+            </span>
+        @endif
         <textarea type="string" style="display:none" id="content" name="content" value="{{ old('content') }}"></textarea>
         <div class="input-field">
             <input id="start_at" type="datetime" class="validate {{ $errors->has('start_at') ? ' invalid' : '' }}" name="start_at" value="{{ old('start_at') }}" required>
             <label for="password-confirm">活动开始时间</label>
         </div>
+        @if ($errors->has('start_at'))
+            <span class="invalid-feedback">
+                <strong>{{ $errors->first('start_at') }}</strong>
+            </span>
+        @endif
         <p style="margin-top:1px;">
             <input type="checkbox" class="filled-in" id="check_required" name="check_required" {{ old('check_required') ? 'checked' : '' }}/>
             <label for="check_required">是否需要签到/签退</label>

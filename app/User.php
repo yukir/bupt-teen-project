@@ -19,7 +19,7 @@ class User extends Authenticatable
     
     //模型关联
     public function activities() {
-        return $this->hasMany('App\Activitiy');
+        return $this->hasMany('App\Activity');
     }
     
     public function comments() {

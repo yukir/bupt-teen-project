@@ -49,7 +49,6 @@ class ActivityController extends Controller
     public function store(Request $request) 
     {
     
-        dd(123);
         //活动表单后端验证
         $validatedData = $request->validate([
             'title' => 'required|string|max:191|unique:activities' ,
@@ -59,19 +58,17 @@ class ActivityController extends Controller
             ],
             'content' => 'required|max:65535',
             'start_at' => 'nullable|date|after:yesterday',
-            'check_required' => 'required|boolean',
             'community_day_id' => 'nullable|numeric',
         ]);
 
         //权限后端验证
         $this->authorize('createWithType',[\App\Activity::Class,$request->input('type')]);
             
-        $a = new Activity($request->only(['title','content','type','start_at','check_required','community_day_id']));
+        $a = new Activity($request->only(['title','content','type','start_at','community_day_id']));
+        if ($request->has("check_required") && $request->input("check_required")=="on") $a->check_required = 1;
         auth()->user()->activities()->save($a);
-        
-        dd($a);
-        
-        return redirect()->route('activities.show',['activity' => $a->id]);
+               
+        return redirect()->route('activity.show',['activity' => $a->id]);
         
     }
 

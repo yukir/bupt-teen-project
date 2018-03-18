@@ -9,7 +9,7 @@
     <p>活动分类： {{ \App\Activity::type_name($activity->type) }}</p>
     <hr>
     <div class="main">
-        {{ $activity->content }}
+        {!! $activity->content !!}
     </div>
     <hr>
     <p>活动开始时间:{{ $activity->start_at }}</p>

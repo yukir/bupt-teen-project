@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
+    
+    protected $fillable = ['title','content','type','start_at','check_required','community_day_id'];
+    
     //模型关联
     public function user() {
         return $this->belongsTo('App\User')->withDefault(function ($user) {
