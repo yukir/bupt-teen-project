@@ -7,7 +7,10 @@
                 :src="userLogo"
             ></avatar>
         </div>
-        <div class="">{{ userName }}</div>
+        <div class="user-name">{{ userName }}</div>
+        <div class="application-status-light" :class="{ on: isApproved }"></div>
+        <div class="application-status-light" :class="{ on: isSignedIn }"></div>
+        <div class="application-status-light" :class="{ on: isSignedOut }"></div>
         <div class="space-between"></div>
         <div class="action-button hide-on-small-only">
             <input type="checkbox" class="filled-in" :id="'approved-' + applicationId" v-model="isApproved" @change="updateApplication" />

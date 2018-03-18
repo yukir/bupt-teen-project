@@ -29,22 +29,9 @@
   margin-right: 10px;
 }
 
-.application-list .user-text-logo {
-  width: 44px;
-  height: 44px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  background-color: red;
-  border-radius: 50%;
-  font-size: 1.5em;
-  text-transform: uppercase;
+.application-list .user-name {
+  min-width: 80px;
+  margin-right: 5px;
 }
 
 .application-list .space-between {
@@ -107,6 +94,17 @@
 
   .application-list.rejected .action-button:nth-last-of-type(2) {
     display: none;
+  }
+
+  .application-status-light {
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    margin: 5px;
+  }
+
+  .application-status-light.on {
+    background-color: #009688;
   }
 }
 

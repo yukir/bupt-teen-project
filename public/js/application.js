@@ -32810,6 +32810,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 Vue.component('avatar', __webpack_require__(47));
 
@@ -33125,7 +33128,22 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("div", {}, [_vm._v(_vm._s(_vm.userName))]),
+      _c("div", { staticClass: "user-name" }, [_vm._v(_vm._s(_vm.userName))]),
+      _vm._v(" "),
+      _c("div", {
+        staticClass: "application-status-light",
+        class: { on: _vm.isApproved }
+      }),
+      _vm._v(" "),
+      _c("div", {
+        staticClass: "application-status-light",
+        class: { on: _vm.isSignedIn }
+      }),
+      _vm._v(" "),
+      _c("div", {
+        staticClass: "application-status-light",
+        class: { on: _vm.isSignedOut }
+      }),
       _vm._v(" "),
       _c("div", { staticClass: "space-between" }),
       _vm._v(" "),
