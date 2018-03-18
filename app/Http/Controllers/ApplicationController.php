@@ -75,6 +75,7 @@ class ApplicationController extends Controller
      */
     public function update(Request $request, Application $application)
     {
+        $this->authorize('update', $application);
         if ($request->has('status')) {
             $application->status = $request->status;
         }

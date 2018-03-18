@@ -32872,6 +32872,11 @@ Vue.component('avatar', __webpack_require__(47));
                 self.isApproved = respond.data.status;
                 self.isSignedIn = respond.data.sign_in;
                 self.isSignedOut = respond.data.sign_out;
+            }).catch(function (error) {
+                if (error.response && error.response.status == 403) {
+                    alert("您无权进行此操作！");
+                    window.location.reload();
+                }
             });
         }
     }
