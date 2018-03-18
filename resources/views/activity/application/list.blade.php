@@ -28,7 +28,7 @@
         :is-signed-out="Boolean({{ $application->sign_out }})"
         application-id="{{ $application->id }}"
         activity-id="{{ $application->activity_id }}"
-        approve-url="www.baidu.com"
+        approve-url="{{ route('application.update', [$application]) }}"
         sign-in-url="{{ route('application.signIn', [$application]) }}"
         sign-out-url="{{ route('application.signOut', [$application]) }}"
     ></application-card>

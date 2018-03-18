@@ -10,20 +10,23 @@
         <div class="">{{ userName }}</div>
         <div class="space-between"></div>
         <div class="action-button hide-on-small-only">
-            <input type="checkbox" class="filled-in" :id="'approved-' + applicationId" v-model="isApproved" />
+            <input type="checkbox" class="filled-in" :id="'approved-' + applicationId" v-model="isApproved" @change="updateApplication" />
             <label :for="'approved-' + applicationId"></label>
         </div>
         <div class="action-button hide-on-small-only">
-            <input type="checkbox" class="filled-in" :id="'sign-in-' + applicationId" v-model="isSignedIn" @change="signedInButtonAction" />
+            <input type="checkbox" class="filled-in" :id="'sign-in-' + applicationId" v-model="isSignedIn" @change="updateApplication" />
             <label :for="'sign-in-' + applicationId"></label>
         </div>
         <div class="action-button hide-on-small-only">
-            <input type="checkbox" class="filled-in" :id="'sign-out-' + applicationId" v-model="isSignedOut" @change="signedOutButtonAction" />
+            <input type="checkbox" class="filled-in" :id="'sign-out-' + applicationId" v-model="isSignedOut" @change="updateApplication" />
             <label :for="'sign-out-' + applicationId"></label>
         </div>
-        <a class="action-button hide-on-med-and-up" href="#!">批准申请</a>
-        <a class="action-button hide-on-med-and-up" href="#!" @click="signedInLinkAction" >标记为已签到</a>
-        <a class="action-button hide-on-med-and-up" href="#!" @click="signedOutLinkAction" >标记为已签退</a>
+        <a v-if="isApproved" class="action-button hide-on-med-and-up" href="#!" @click="approveLinkAction">撤销批准</a>
+        <a v-else class="action-button hide-on-med-and-up" href="#!" @click="approveLinkAction">批准申请</a>
+        <a v-if="isSignedIn" class="action-button hide-on-med-and-up" href="#!" @click="signedInLinkAction" >标记为未签到</a>
+        <a v-else class="action-button hide-on-med-and-up" href="#!" @click="signedInLinkAction" >标记为已签到</a>
+        <a v-if="isSignedOut" class="action-button hide-on-med-and-up" href="#!" @click="signedOutLinkAction" >标记为未签退</a>
+        <a v-else class="action-button hide-on-med-and-up" href="#!" @click="signedOutLinkAction" >标记为已签退</a>
     </div>
 </template>
 
@@ -68,29 +71,29 @@ export default {
                 });
             }
         },
+        approveLinkAction: function () {
+            this.isApproved = !this.isApproved;
+            this.updateApplication();
+        },
         signedInLinkAction: function () {
-            var self = this;
-            if (!this.isSignedIn) {
-                axios.get(this.signInUrl)
-                .then(function (response) {
-                    self.isSignedIn = response.data;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            }
+            this.isSignedIn = !this.isSignedIn;
+            this.updateApplication();
         },
         signedOutLinkAction: function () {
+            this.isSignedOut = !this.isSignedOut;
+            this.updateApplication();
+        },
+        updateApplication: function () {
             var self = this;
-            if (!this.isSignedOut) {
-                axios.get(this.signOutUrl)
-                .then(function (response) {
-                    self.isSignedOut = response.data;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            }
+            axios.patch(self.approveUrl, {
+                'status': self.isApproved,
+                'sign_in': self.isSignedIn,
+                'sign_out': self.isSignedOut
+            }).then(function (respond) {
+                self.isApproved = respond.data.status;
+                self.isSignedIn = respond.data.sign_in;
+                self.isSignedOut = respond.data.sign_out;
+            })
         }
     }
 }

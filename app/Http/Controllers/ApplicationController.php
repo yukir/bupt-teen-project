@@ -67,15 +67,29 @@ class ApplicationController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * 批准、签到、签退信息更新
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Application $application)
     {
-        return response()->json(true);
+        if ($request->has('status')) {
+            $application->status = $request->status;
+        }
+        if ($request->has('sign_in')) {
+            $application->sign_in = $request->sign_in;
+        }
+        if ($request->has('sign_out')) {
+            $application->sign_out = $request->sign_out;
+        }
+        $application->save();
+        return response()->json([
+            'status' => $application->status,
+            'sign_in' => $application->sign_in,
+            'sign_out' => $application->sign_out
+        ]);
     }
 
     /**
@@ -92,7 +106,6 @@ class ApplicationController extends Controller
     /**
      * Turn the 'sign_in' coloum of $applicationID to 1.
      * 从 Web 访问时，可以为参与者展示签到用的二维码。
-     * 使用 AJAX 访问时，会返回操作结果。只有组织者有权限从 AJAX 访问。
      *
      * @return \Illuminate\Http\Response
      */
@@ -109,7 +122,6 @@ class ApplicationController extends Controller
     /**
      * Turn the 'sign_out' coloum of $applicationID to 1.
      * 从 Web 访问时，可以为参与者和组织者分别展示签到用的二维码。
-     * 使用 AJAX 访问时，会返回操作结果。
      *
      * @return \Illuminate\Http\Response
      */

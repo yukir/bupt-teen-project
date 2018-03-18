@@ -32807,6 +32807,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 Vue.component('avatar', __webpack_require__(47));
 
@@ -32844,25 +32847,29 @@ Vue.component('avatar', __webpack_require__(47));
                 });
             }
         },
+        approveLinkAction: function approveLinkAction() {
+            this.isApproved = !this.isApproved;
+            this.updateApplication();
+        },
         signedInLinkAction: function signedInLinkAction() {
-            var self = this;
-            if (!this.isSignedIn) {
-                axios.get(this.signInUrl).then(function (response) {
-                    self.isSignedIn = response.data;
-                }).catch(function (error) {
-                    console.log(error);
-                });
-            }
+            this.isSignedIn = !this.isSignedIn;
+            this.updateApplication();
         },
         signedOutLinkAction: function signedOutLinkAction() {
+            this.isSignedOut = !this.isSignedOut;
+            this.updateApplication();
+        },
+        updateApplication: function updateApplication() {
             var self = this;
-            if (!this.isSignedOut) {
-                axios.get(this.signOutUrl).then(function (response) {
-                    self.isSignedOut = response.data;
-                }).catch(function (error) {
-                    console.log(error);
-                });
-            }
+            axios.patch(self.approveUrl, {
+                'status': self.isApproved,
+                'sign_in': self.isSignedIn,
+                'sign_out': self.isSignedOut
+            }).then(function (respond) {
+                self.isApproved = respond.data.status;
+                self.isSignedIn = respond.data.sign_in;
+                self.isSignedOut = respond.data.sign_out;
+            });
         }
     }
 });
@@ -33140,25 +33147,28 @@ var render = function() {
               : _vm.isApproved
           },
           on: {
-            change: function($event) {
-              var $$a = _vm.isApproved,
-                $$el = $event.target,
-                $$c = $$el.checked ? true : false
-              if (Array.isArray($$a)) {
-                var $$v = null,
-                  $$i = _vm._i($$a, $$v)
-                if ($$el.checked) {
-                  $$i < 0 && (_vm.isApproved = $$a.concat([$$v]))
+            change: [
+              function($event) {
+                var $$a = _vm.isApproved,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 && (_vm.isApproved = $$a.concat([$$v]))
+                  } else {
+                    $$i > -1 &&
+                      (_vm.isApproved = $$a
+                        .slice(0, $$i)
+                        .concat($$a.slice($$i + 1)))
+                  }
                 } else {
-                  $$i > -1 &&
-                    (_vm.isApproved = $$a
-                      .slice(0, $$i)
-                      .concat($$a.slice($$i + 1)))
+                  _vm.isApproved = $$c
                 }
-              } else {
-                _vm.isApproved = $$c
-              }
-            }
+              },
+              _vm.updateApplication
+            ]
           }
         }),
         _vm._v(" "),
@@ -33203,7 +33213,7 @@ var render = function() {
                   _vm.isSignedIn = $$c
                 }
               },
-              _vm.signedInButtonAction
+              _vm.updateApplication
             ]
           }
         }),
@@ -33249,7 +33259,7 @@ var render = function() {
                   _vm.isSignedOut = $$c
                 }
               },
-              _vm.signedOutButtonAction
+              _vm.updateApplication
             ]
           }
         }),
@@ -33257,34 +33267,65 @@ var render = function() {
         _c("label", { attrs: { for: "sign-out-" + _vm.applicationId } })
       ]),
       _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "action-button hide-on-med-and-up",
-          attrs: { href: "#!" }
-        },
-        [_vm._v("批准申请")]
-      ),
+      _vm.isApproved
+        ? _c(
+            "a",
+            {
+              staticClass: "action-button hide-on-med-and-up",
+              attrs: { href: "#!" },
+              on: { click: _vm.approveLinkAction }
+            },
+            [_vm._v("撤销批准")]
+          )
+        : _c(
+            "a",
+            {
+              staticClass: "action-button hide-on-med-and-up",
+              attrs: { href: "#!" },
+              on: { click: _vm.approveLinkAction }
+            },
+            [_vm._v("批准申请")]
+          ),
       _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "action-button hide-on-med-and-up",
-          attrs: { href: "#!" },
-          on: { click: _vm.signedInLinkAction }
-        },
-        [_vm._v("标记为已签到")]
-      ),
+      _vm.isSignedIn
+        ? _c(
+            "a",
+            {
+              staticClass: "action-button hide-on-med-and-up",
+              attrs: { href: "#!" },
+              on: { click: _vm.signedInLinkAction }
+            },
+            [_vm._v("标记为未签到")]
+          )
+        : _c(
+            "a",
+            {
+              staticClass: "action-button hide-on-med-and-up",
+              attrs: { href: "#!" },
+              on: { click: _vm.signedInLinkAction }
+            },
+            [_vm._v("标记为已签到")]
+          ),
       _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "action-button hide-on-med-and-up",
-          attrs: { href: "#!" },
-          on: { click: _vm.signedOutLinkAction }
-        },
-        [_vm._v("标记为已签退")]
-      )
+      _vm.isSignedOut
+        ? _c(
+            "a",
+            {
+              staticClass: "action-button hide-on-med-and-up",
+              attrs: { href: "#!" },
+              on: { click: _vm.signedOutLinkAction }
+            },
+            [_vm._v("标记为未签退")]
+          )
+        : _c(
+            "a",
+            {
+              staticClass: "action-button hide-on-med-and-up",
+              attrs: { href: "#!" },
+              on: { click: _vm.signedOutLinkAction }
+            },
+            [_vm._v("标记为已签退")]
+          )
     ]
   )
 }
