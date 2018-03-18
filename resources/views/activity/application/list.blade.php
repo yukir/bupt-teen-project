@@ -21,6 +21,7 @@
     </div>
     @foreach ($applications as $application)
     <application-card 
+        user-logo="{{ $application->user->avatar }}"
         user-name="{{ $application->user->username }}"
         :is-approved="{{ $application->status }}"
         :is-signed-in="{{ $application->sign_in }}"
@@ -32,17 +33,6 @@
         sign-out-url="www.baidu.com"
     ></application-card>
     @endforeach
-    <application-card 
-        user-name="杨林"
-        :is-approved="{{ $application->status }}"
-        :is-signed-in="{{ $application->sign_in }}"
-        :is-signed-out="{{ $application->sign_out }}"
-        application-id="{{ $application->id }}"
-        activity-id="{{ $application->activity_id }}"
-        approve-url="www.baidu.com"
-        sign-in-url="www.baidu.com"
-        sign-out-url="www.baidu.com"
-    ></application-card>
 </div>
 @endsection
 

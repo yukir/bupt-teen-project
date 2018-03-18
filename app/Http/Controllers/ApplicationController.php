@@ -98,7 +98,7 @@ class ApplicationController extends Controller
      * @param  int  $applicationID
      * @return \Illuminate\Http\Response
      */
-    public function signIn($activityID, $applicationID) {
+    public function signIn($applicationID) {
         $application = Application::find($applicationID);
         $application->sign_in = 1;
         $application->save();
@@ -114,7 +114,7 @@ class ApplicationController extends Controller
      * @param  int  $applicationID
      * @return \Illuminate\Http\Response
      */
-    public function signOut($activityID, $applicationID) {
+    public function signOut($applicationID) {
         $application = Application::find($applicationID);
         $application->sign_out = 1;
         $application->save();
@@ -124,13 +124,13 @@ class ApplicationController extends Controller
     /**
      * Return an URL to sign in
     */
-    public function signInURL($activityID, $applicationID) {
+    public function signInURL($applicationID) {
         $token = new TimestampToken();
+        $application = Application::find($applicationID);
         $token->id = rand();
-        $token->activity_id = $activityID;
+        $token->activity_id = $application->activity->id;
         $token->save();
         return route('application.signInWithToken', [
-            'activity' => $activityID,
             'application' => $applicationID,
             'token' => $token->id
         ]);
@@ -141,11 +141,11 @@ class ApplicationController extends Controller
     */
     public function signOutURL($activityID, $applicationID) {
         $token = new TimestampToken();
+        $application = Application::find($applicationID);
         $token->id = rand();
-        $token->activity_id = $activityID;
+        $token->activity_id = $application->activity->id;
         $token->save();
         return route('application.signOutWithToken', [
-            'activity' => $activityID,
             'application' => $applicationID,
             'token' => $token->id
         ]);
@@ -155,7 +155,7 @@ class ApplicationController extends Controller
      * 扫码签到。
      * 只有参与者会从 Web 访问这个页面。
     */
-    public function signInWithToken($activityID, $applicationID, $tokenID) {
+    public function signInWithToken($applicationID, $tokenID) {
         $token = TimestampToken::find($tokenID);
         if ($token == null) {
             return "Failed2";
@@ -175,7 +175,7 @@ class ApplicationController extends Controller
      * 扫码签到。
      * 只有参与者会从 Web 访问这个页面。
     */
-    public function signOutWithToken($activityID, $applicationID, $tokenID) {
+    public function signOutWithToken($applicationID, $tokenID) {
         $token = TimestampToken::find($tokenID);
         if ($token == null) {
             return "Failed2";
