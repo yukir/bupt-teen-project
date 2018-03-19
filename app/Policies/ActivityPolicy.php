@@ -42,13 +42,37 @@ class ActivityPolicy
      * 用户是否有创建活动的权利
      * 需求待应答
      */
-    public function create(User $user,Type $type)
+    public function create(User $user,$type)
     {
         return true;
     }
     public function createWithType(User $user,$type)
     {
+        return $this->isAdminOfType($user,$type);
+    }
 
+    /**
+     * 用户是否有编辑活动的权利
+     * 需求待应答:是否必须为创建者才能修改？
+     */
+    public function update(User $user,Activity $activity, $type)
+    {
+        
+        if (config('settings.update_activity_only_creator')) return $user->id == $activity->user_id;
+        else return $this->isAdminOfType($user,$type);
+    }
+
+    /**
+     * 用户是否有创建活动的权利
+     * 需求待应答:是否必须为创建者才能修改？
+     */
+    public function delete(User $user, Activity $activity, $type)
+    {
+        if (config('settings.delete_activity_only_creator')) return $user->id == $activity->user_id;
+        else return $this->isAdminOfType($user,$type);
+    }
+    
+    public static function isAdminOfType(User $user,$type) {
         if ($user->sxyl_admin && $type == "sxyl") return true;
         if ($user->xxst_admin && ($type == "yxtx" || $type == "mzy")) return true;
         if (($user->zttr_admin || $user->zttr_tzs ) && $type == "zttr") return true;
@@ -57,25 +81,5 @@ class ActivityPolicy
         if ($user->xywh_admin && $type == "xywh") return true;
         
         return false;
-    }
-
-    /**
-     * 用户是否有编辑活动的权利
-     * 需求待应答:是否必须为创建者才能修改？
-     */
-    public function update(User $user,Activity $activity)
-    {
-        
-        return true;
-        //return $user->id == $activity->user_id;
-    }
-
-    /**
-     * 用户是否有创建活动的权利
-     * 需求待应答:是否必须为创建者才能修改？
-     */
-    public function delete(User $user, Activity $activity)
-    {
-        return $user->id == $activity->user_id;
     }
 }

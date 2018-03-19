@@ -22,6 +22,6 @@ Auth::routes();
 Route::resource('activity','ActivityController');
 
 //评论
-Route::post('/activity/{activity}/comment', 'CommentController@create')->name('comment.create');
+Route::post('/activity/{activity}/comment', 'CommentController@store')->name('comment.create');
 Route::put('/comment/{comment}', 'CommentController@update')->name('comment.update');
-Route::delete('/comment/{comment}', 'CommentController@delete')->name('comment.delete');
+Route::delete('/comment/{comment}', 'CommentController@delete')->name('comment.destroy');

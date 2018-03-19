@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\User;
+use Carbon\Carbon;
 
 class Activity extends Model
 {
@@ -10,6 +12,7 @@ class Activity extends Model
     protected $fillable = ['title','content','type','start_at','check_required','community_day_id'];
     
     //模型关联
+    //这里指发布者
     public function user() {
         return $this->belongsTo('App\User')->withDefault(function ($user) {
             $user->username = '[已删除]';
@@ -30,6 +33,19 @@ class Activity extends Model
         return $this->hasMany('App\Application');
     }
     
+    //用户是否参加了该活动
+    public function user_participated(User $user) {
+        $applications = $user->application;
+        
+        foreach($applications as $app) if($app->activity->id = $this->id) return true;
+        return false;
+    }
+    
+    //活动是否结束
+    public function is_end() {
+        if ($this->start_at == null || empty($this->start_at)) return true;
+        return $this->start_at > Carbon::now();
+    }
     //类型翻译
     public static function type_name($str) {
         $strArr = [

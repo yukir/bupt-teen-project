@@ -18,7 +18,9 @@ class User extends Authenticatable
     ];
     
     //模型关联
-    public function activities() {
+    
+    //这里指发布的活动
+    public function activities() { 
         return $this->hasMany('App\Activity');
     }
     
@@ -34,6 +36,7 @@ class User extends Authenticatable
         return $this->hasMany('App\CommunityDay');
     }
     
+    
     /**
      * 方法
      */
@@ -41,6 +44,14 @@ class User extends Authenticatable
     //超级管理员 拥有一切权限
     public function isSuperAdmin() {
         return $this->super_admin;
+    }
+    
+    //是否参加了某项活动
+    public function isParticipating(Activity $activity) {
+        $applications = $activity->application;
+        
+        foreach($applications as $app) if($app->user->id = $this->id) return true;
+        return false;
     }
     
     //拥有团员信息管理权限 

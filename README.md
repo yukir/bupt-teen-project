@@ -74,6 +74,7 @@ check_required 是否需要签到&签退
 user_id 发布者id  
 activity_id 对应活动id  
 content 内容(字符串)  
+checked 是否审核 如果不需要审核 则默认为1
 
 ### Application 活动报名
 user_id 报名者id    

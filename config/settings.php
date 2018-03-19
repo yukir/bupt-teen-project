@@ -14,6 +14,8 @@ return [
     
     //只有活动发布者才能编辑活动信息
     'update_activity_only_creator' => 0, 
+    //只有活动发布者才能删除该活动
+    'delete_activity_only_creator' => 0, 
     
     /*-------------------------------------------------------------------------*\
     | 评论/反馈相关 
@@ -25,8 +27,12 @@ return [
     'comment_only_signed' => 1,
     //活动反馈公开给:所有用户2 参加活动的用户1 仅活动发布者0
     'public_comments' => 2,
+    
     //评论是否需要审核
     'comment_moderation' => 0,
-
+    //评论作者是否可以编辑自己的评论
+    'comment_modifiable' => 0, 
+    //评论作者是否可以删除自己的评论
+    'comment_deletable' => 0, 
 
 ];
