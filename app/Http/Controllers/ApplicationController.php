@@ -117,7 +117,9 @@ class ApplicationController extends Controller
             return response()->json(true);
         }
         
-        return view('activity.application.qr');
+        return view('activity.application.qr', [
+            'application' => $application
+        ]);
     }
 
     /**
@@ -139,13 +141,14 @@ class ApplicationController extends Controller
     /**
      * Return an URL to sign in. 只允许 AJAX 访问。
     */
-    public function signInURL(Application $application) {
+    public function signInURL(Activity $activity) {
+        $activity->timestamp_tokens()->delete();
         $token = new TimestampToken();
         $token->id = rand();
-        $token->activity_id = $application->activity_id;
+        $token->activity()->associate($activity);
         $token->save();
         return route('application.signInWithToken', [
-            'application' => $application,
+            'activity' => $activity,
             'token' => $token->id
         ]);
     }
@@ -153,10 +156,11 @@ class ApplicationController extends Controller
     /**
      * Return an URL to sign out. 只允许 AJAX 访问。
     */
-    public function signOutURL(Application $application) {
+    public function signOutURL(Activity $activity) {
+        $activity->timestamp_tokens()->delete();
         $token = new TimestampToken();
         $token->id = rand();
-        $token->activity_id = $application->activity_id;
+        $token->activity()->associate($activity);
         $token->save();
         return route('application.signOutWithToken', [
             'application' => $application,

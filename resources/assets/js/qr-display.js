@@ -1,13 +1,5 @@
-import QrcodeVue from 'qrcode.vue';
+Vue.component('qr-code', require('./components/QR.vue'));
 
-const app = new Vue({
-    el: '#qrcode',
-    data: {
-        value: "String",
-        size: 500
-    },
-    template: '<qrcode-vue :value="value" :size="size"></qrcode-vue>',
-    components: {
-        QrcodeVue
-      }
+var app = new Vue({
+    el: '#app'
 });

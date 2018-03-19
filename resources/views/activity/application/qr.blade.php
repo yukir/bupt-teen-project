@@ -25,7 +25,7 @@
         }
     </style>
     <div id="app">
-        <div id="qrcode" value="LinkinYoung" :size="500"></div>
+        <qr-code src="{{ route('application.signInURL', [$application]) }}" :size="500"></qr-code>
     </div>
 
     <!-- Scripts -->

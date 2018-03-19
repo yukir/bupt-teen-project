@@ -25,10 +25,10 @@ Route::resource('activity','ActivityController');
 Route::get('/activity/{activity}/application', 'ApplicationController@index');
 Route::get('/application/{application}/sign-in', 'ApplicationController@signIn')->name('application.signIn');
 Route::get('/application/{application}/sign-out', 'ApplicationController@signOut')->name('application.signOut');
-Route::get('/application/{application}/sign-in-url', 'ApplicationController@signInURL');
-Route::get('/application/{application}/sign-out-url', 'ApplicationController@signOutURL');
-Route::get('/application/{application}/sign-in/{token}', 'ApplicationController@signInWithToken')->name('application.signInWithToken');
-Route::get('/application/{application}/sign-out/{token}', 'ApplicationController@signOutWithToken')->name('application.signOutWithToken');
+Route::get('/activity/{activity}/sign-in-url', 'ApplicationController@signInURL')->name('application.signInURL');
+Route::get('/activity/{activity}/sign-out-url', 'ApplicationController@signOutURL')->name('application.signOutURL');
+Route::get('/activity/{activity}/sign-in/{token}', 'ApplicationController@signInWithToken')->name('application.signInWithToken');
+Route::get('/activity/{activity}/sign-out/{token}', 'ApplicationController@signOutWithToken')->name('application.signOutWithToken');
 Route::resource('/application', 'ApplicationController', ['except' => ['index']]);
 
 //评论
