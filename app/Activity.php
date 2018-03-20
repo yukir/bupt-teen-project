@@ -9,7 +9,7 @@ use Carbon\Carbon;
 class Activity extends Model
 {
     
-    protected $fillable = ['title','content','type','start_at','check_required','community_day_id'];
+    protected $fillable = ['user_id','title','content','type','start_at','check_required','community_day_id'];
     
     //模型关联
     //这里指发布者

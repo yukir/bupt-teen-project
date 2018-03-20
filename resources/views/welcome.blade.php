@@ -39,6 +39,7 @@
             {{ (Auth::user()->isSuperAdmin()) }}
         @endauth
         </p>
+        <p> {{ \App\User::count() }}</p>
     </div>
 </div>
 @stop
