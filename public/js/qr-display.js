@@ -80,7 +80,15 @@ module.exports = __webpack_require__(49);
 Vue.component('qr-code', __webpack_require__(56));
 
 var app = new Vue({
-    el: '#app'
+    el: '#app',
+    methods: {
+        getQRFrameSize: function getQRFrameSize() {
+            var qrFrame = document.querySelector('#qr-frame');
+            var height = Number(window.getComputedStyle(qrFrame).getPropertyValue('height').slice(0, -2));
+            var width = Number(window.getComputedStyle(qrFrame).getPropertyValue('width').slice(0, -2));
+            return Math.min(height, width);
+        }
+    }
 });
 
 /***/ }),
@@ -1284,6 +1292,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -1295,8 +1304,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     props: {
-        size: Number,
-        src: String
+        src: String,
+        size: Number
     },
     components: {
         QrcodeVue: __WEBPACK_IMPORTED_MODULE_0_qrcode_vue__["a" /* default */]

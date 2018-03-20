@@ -25,6 +25,8 @@ Route::resource('activity','ActivityController');
 Route::get('/activity/{activity}/application', 'ApplicationController@index');
 Route::get('/application/{application}/sign-in', 'ApplicationController@signIn')->name('application.signIn');
 Route::get('/application/{application}/sign-out', 'ApplicationController@signOut')->name('application.signOut');
+Route::get('/activity/{activity}/sign-in', 'ApplicationController@displaySignInQR')->name('activity.displaySignInQR');
+Route::get('/activity/{activity}/sign-out', 'ApplicationController@displaySignOutQR')->name('activity.displaySignOutQR');
 Route::get('/activity/{activity}/sign-in-url', 'ApplicationController@signInURL')->name('application.signInURL');
 Route::get('/activity/{activity}/sign-out-url', 'ApplicationController@signOutURL')->name('application.signOutURL');
 Route::get('/activity/{activity}/sign-in/{token}', 'ApplicationController@signInWithToken')->name('application.signInWithToken');

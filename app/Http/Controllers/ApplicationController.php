@@ -105,18 +105,32 @@ class ApplicationController extends Controller
     }
 
     /**
-     * Turn the 'sign_in' coloum of $applicationID to 1.
+     * 从 Web 访问时，可以为组织者展示签到用的二维码。
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function displaySignInQR(Activity $activity) {
+        return view('activity.application.qr', [
+            'activity' => $activity
+        ]);
+    }
+
+    /**
+     * Turn the 'sign_out' coloum of $applicationID to 1.
+     * 从 Web 访问时，可以为参与者展示签到用的二维码。
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function displaySignOutQR(Request $request, Application $application) {
+        return "请让组织者扫描此二维码来签退";
+    }
+
+    /**
      * 从 Web 访问时，可以为参与者展示签到用的二维码。
      *
      * @return \Illuminate\Http\Response
      */
     public function signIn(Request $request, Application $application) {
-        if($request->ajax()){
-            $application->sign_in = 1;
-            $application->save();
-            return response()->json(true);
-        }
-        
         return view('activity.application.qr', [
             'application' => $application
         ]);
@@ -124,17 +138,11 @@ class ApplicationController extends Controller
 
     /**
      * Turn the 'sign_out' coloum of $applicationID to 1.
-     * 从 Web 访问时，可以为参与者和组织者分别展示签到用的二维码。
+     * 从 Web 访问时，可以为参与者展示签到用的二维码。
      *
      * @return \Illuminate\Http\Response
      */
     public function signOut(Request $request, Application $application) {
-        if($request->ajax()){
-            $application->sign_out = 1;
-            $application->save();
-            return response()->json(true);
-        }
-        
         return "请让组织者扫描此二维码来签退";
     }
 

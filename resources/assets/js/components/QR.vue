@@ -1,6 +1,7 @@
-<template>
+<template ref="qr-frame">
     <qrcode-vue :value="value" :size="size" level="H"></qrcode-vue>
 </template>
+
 <script>
 import QrcodeVue from 'qrcode.vue';
 
@@ -11,8 +12,8 @@ export default {
         }
     },
     props: {
-        size: Number,
-        src: String
+        src: String,
+        size: Number
     },
     components: {
         QrcodeVue
