@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Activity;
 use App\Application;
 use App\TimestampToken;
@@ -110,6 +111,10 @@ class ApplicationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function displaySignInQR(Activity $activity) {
+        if ($activity->applications->isEmpty()) {
+            abort(403, '没有申请表。不能签入。');
+        }
+        $this->authorize('update', $activity->applications->first());
         return view('activity.application.qr', [
             'activity' => $activity
         ]);
@@ -147,9 +152,13 @@ class ApplicationController extends Controller
     }
 
     /**
-     * Return an URL to sign in. 只允许 AJAX 访问。
+     * Return an URL to sign in.
     */
     public function signInURL(Activity $activity) {
+        if ($activity->applications->isEmpty()) {
+            abort(403, '没有申请表。不能签入。');
+        }
+        $this->authorize('update', $activity->applications->first());
         $activity->timestamp_tokens()->delete();
         $token = new TimestampToken();
         $token->id = rand();
@@ -162,16 +171,20 @@ class ApplicationController extends Controller
     }
 
     /**
-     * Return an URL to sign out. 只允许 AJAX 访问。
+     * Return an URL to sign out.
     */
     public function signOutURL(Activity $activity) {
+        if ($activity->applications->isEmpty()) {
+            abort(403, '没有申请表。不能签出。');
+        }
+        $this->authorize('update', $activity->applications->first());
         $activity->timestamp_tokens()->delete();
         $token = new TimestampToken();
         $token->id = rand();
         $token->activity()->associate($activity);
         $token->save();
         return route('application.signOutWithToken', [
-            'application' => $application,
+            'activity' => $activity,
             'token' => $token->id
         ]);
     }
@@ -180,18 +193,24 @@ class ApplicationController extends Controller
      * 扫码签到。
      * 只有参与者会从 Web 访问这个页面。
     */
-    public function signInWithToken(Application $application, $tokenID) {
+    public function signInWithToken(Activity $activity, $tokenID) {
         $token = TimestampToken::find($tokenID);
         if ($token == null) {
-            return "Failed2";
+            abort(403, "Failed2: No token" . $tokenID);
         }
         if ($token->created_at->diffInSeconds() > 10) {
             $token->delete();
-            return "Failed";
+            abort(403, "二维码已失效。");
         } else {
+            $application = $activity->applications->where('user_id', Auth::id())->first();
+            if ($application == null) {
+                abort(403, "请登录或先报名");
+            }
             $application->sign_in = 1;
             $application->save();
-            return "🐱";
+            return view('activity.application.signInSuccess', [
+                'activity' => $activity
+            ]);
         }
     }
 

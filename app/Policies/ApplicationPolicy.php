@@ -34,12 +34,12 @@ class ApplicationPolicy
     }
     
     /**
-     * 用户是否有处理申请表的权利
+     * 用户是否有处理申请表的权力
      * 当前策略是仅活动组织者可以批准、签到、签退活动的申请表
      */
     public function update(User $user, Application $application) 
     {
-        return $user->id === $application->user_id;
+        return $user->id === $application->activity->user_id;
     }
 
     /**
