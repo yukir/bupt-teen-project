@@ -24,7 +24,7 @@ Route::resource('activity','ActivityController');
 //评论
 Route::post('/activity/{activity}/comment', 'CommentController@store')->name('comment.create');
 Route::put('/comment/{comment}', 'CommentController@update')->name('comment.update');
-Route::delete('/comment/{comment}', 'CommentController@delete')->name('comment.destroy');
+Route::delete('/comment/{comment}', 'CommentController@destroy')->name('comment.destroy');
 
 //个人主页
 Route::get('/user/{user}', 'UserController@index')->name('user.index');

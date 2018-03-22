@@ -12,6 +12,7 @@ class Comment extends Model
     public function user() {
         return $this->belongsTo('App\User')->withDefault(function ($user) {
             $user->username = '[已删除]';
+            $user->id = -1;
         });
     }
     

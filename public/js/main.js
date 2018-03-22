@@ -1,9 +1,12 @@
 $(function(){
+    $(".button-collapse").sideNav();
+    
     $.ajaxSetup({
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    
     function Request(strName) {
         var strHref = window.document.location.href;
         var intPos = strHref.indexOf("?");
