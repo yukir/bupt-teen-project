@@ -73,5 +73,11 @@ class User extends Authenticatable
         
         return $str;
     }
-    //权限部分待补充
+    
+    //头像访问器
+    public function getAvatarAttribute($value)
+    {
+        if ($value == null) return "/images/user.jpg";
+        return $value;
+    }
 }

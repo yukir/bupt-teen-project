@@ -34,9 +34,25 @@
         <p><strong><a class="comment_author" href="#"></a></strong>:<span class="comment_content"></span></p>
         </div>
         @foreach ($activity->comments as $comment)
-        <div class="comment">
-        <p><strong><a class="comment_author" href="#">{{ $comment->user->username }}</a></strong>:<span class="comment_content">{{ $comment->content }}</span></p>
-        </div>
+            @can('view',$comment,$activity)
+            <div class="comment" data-id="{{ $comment->id }}">
+            <p><strong><a class="comment_author" href="#">{{ $comment->user->username }}</a></strong>:<span class="comment_content">{{ $comment->content }}</span></p>
+            </div>
+            <div class="comment_buttons">
+                <span class="timeago">{{ $comment->created_at }}</span>
+                @can('update',$activity,$comment)
+                &nbsp;|&nbsp;<a href="#" class="comment_update">修改</a>     
+                @endcan
+                @can('delete',$comment,$activity)
+                &nbsp;|&nbsp;<a href="#" class="comment_delete">删除</a>
+                @endcan
+                @can('moderate',$comment,$activity)
+                @if(!$comment->checked)
+                &nbsp;|&nbsp;<a href="#" class="comment_moderate">审核通过</a>
+                @endif
+                @endcan
+            </div>
+            @endcan
         @endforeach
     @endif
     </div>    
@@ -44,7 +60,11 @@
 @stop
 
 @section('js')
+<script src="{{ asset('js/timeago.min.js') }}"></script> 
 <script>
+    var timeagoInstance = timeago();
+    timeagoInstance.render(document.querySelectorAll('.timeago'), 'zh_CN');
+    
     $(function(){
         $("#comment_submit").click(function(){
             if($("#content").val()=="") $("#content").focus().addClass("invalid");

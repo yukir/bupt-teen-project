@@ -13,8 +13,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
-        return view('home');
+        return view('user.index',[
+            'main_title' => $user->username." - 个人主页",
+            'user' => $user,
+        ]);
     }
 }

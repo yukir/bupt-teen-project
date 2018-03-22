@@ -2,6 +2,7 @@
 @auth
 <ul id="dropdown_auth" class="dropdown-content">
     <li>
+        <a class="dropdown-item" href="/user/{{ Auth::user()->id }}">个人主页</a>
         <a class="dropdown-item" href="{{ route('logout') }}"
             onclick="event.preventDefault();
             document.getElementById('logout-form').submit();">

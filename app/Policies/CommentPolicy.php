@@ -29,6 +29,7 @@ class CommentPolicy
      */
     public function view(User $user, Comment $comment, Activity $activity)
     {
+        if (!$comment->checked && !$this->isAdminOfType($user,$activity->type)) return false; 
         if (config("settings.public_comments") == 2) return true;
         if (config("settings.public_comments") == 1) return $activity->user_participated($user) || $activity->user_id == $user->id;
         
