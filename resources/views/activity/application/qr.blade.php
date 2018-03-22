@@ -60,24 +60,31 @@
             box-sizing: border-box;
             font-size: 5vh;
         }
+        #full-screen-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 5vh;
+        }
+        #qr-frame canvas {
+            width: 100%;
+            height: 100%;
+        }
         @media screen and (max-width: 600px) {
             #qr-frame {
                 width: 300px;
                 height: 300px;
                 padding: 10px;
             }
-            #app h3 {
-                height: auto;
-            }
-            #app h4 {
-                height: auto;
-                
+            #full-screen-button {
+                display: none;
             }
         }
     </style>
     <div id="app">
+        <a id="full-screen-button" href="#!" @click="toggleFullScreen">全屏显示</a>
         <h3>消息文本</h3>
-        <qr-code class="z-depth-4" id="qr-frame" src="{{ route('application.signInURL', [$activity]) }}" :size="getQRFrameSize()"></qr-code>
+        <qr-code ref="qrcode" class="z-depth-4" id="qr-frame" src="{{ route('application.signInURL', [$activity]) }}" :size="getQRFrameSize()"></qr-code>
         <h4><img src="{{ asset('img/apps.png') }}" /><span>使用任意应用扫码</span></h4>
     </div>
 

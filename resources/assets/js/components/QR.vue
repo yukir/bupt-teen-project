@@ -1,4 +1,4 @@
-<template ref="qr-frame">
+<template>
     <qrcode-vue :value="value" :size="size" level="H"></qrcode-vue>
 </template>
 
@@ -23,6 +23,7 @@ export default {
         setInterval(() => {
             this.updateQR();
         }, 10000);
+        document.querySelector("#qr-frame canvas").removeAttribute("style");
     },
     methods: {
         updateQR: function () {
@@ -34,6 +35,7 @@ export default {
             .catch(function (error) {
                 console.log(error);
             });
+
         }
     }
 }
