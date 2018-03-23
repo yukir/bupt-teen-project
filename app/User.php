@@ -18,8 +18,10 @@ class User extends Authenticatable
     ];
     
     //模型关联
-    public function activities() {
-        return $this->hasMany('App\Activitiy');
+    
+    //这里指发布的活动
+    public function activities() { 
+        return $this->hasMany('App\Activity');
     }
     
     public function comments() {
@@ -34,6 +36,7 @@ class User extends Authenticatable
         return $this->hasMany('App\CommunityDay');
     }
     
+    
     /**
      * 方法
      */
@@ -42,6 +45,16 @@ class User extends Authenticatable
     public function isSuperAdmin() {
         return $this->super_admin;
     }
+    
+    //是否参加了某项活动
+    public function isParticipating(Activity $activity) {
+        $applications = $activity->application;
+        
+        foreach($applications as $app) if($app->user->id = $this->id) return true;
+        return false;
+    }
+    
+    //拥有团员信息管理权限 
     
     //列出权限
     public function powerShown() {
@@ -60,5 +73,11 @@ class User extends Authenticatable
         
         return $str;
     }
-    //权限部分待补充
+    
+    //头像访问器
+    public function getAvatarAttribute($value)
+    {
+        if ($value == null) return "/images/user.jpg";
+        return $value;
+    }
 }

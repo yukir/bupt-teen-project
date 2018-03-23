@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\User;
 use App\Activity;
+use Illuminate\Http\Request;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ActivityPolicy
@@ -12,29 +13,66 @@ class ActivityPolicy
     
     public function before($user, $ability)
     {
-        if ($user->isSuperAdmin()) {
+        if ($user->isSuperAdmin()) 
             return true;
-        }
+        
+        if ($user->banned) 
+            return false;
+
     }
     
     /**
-     * Determine whether the user can view the activity.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Activity  $activity
-     * @return mixed
+     * 用户是否拥有浏览某个活动的权利
+     * 需求待应答
      */
     public function view(User $user, Activity $activity)
     {
-        //
+        return true;
     }
-
+    
+    /**
+     * 用户是否拥有浏览某类活动列表的权利
+     * 需求待应答
+     */
+    public function viewList(User $user, $type)
+    {
+        return true;
+    }
     /**
      * 用户是否有创建活动的权利
      * 需求待应答
      */
-    public function createWithType(User $user, $type)
+    public function create(User $user,$type)
     {
+        return true;
+    }
+    public function createWithType(User $user,$type)
+    {
+        return $this->isAdminOfType($user,$type);
+    }
+
+    /**
+     * 用户是否有编辑活动的权利
+     * 需求待应答:是否必须为创建者才能修改？
+     */
+    public function update(User $user,Activity $activity, $type)
+    {
+        
+        if (config('settings.update_activity_only_creator')) return $user->id == $activity->user_id;
+        else return $this->isAdminOfType($user,$type);
+    }
+
+    /**
+     * 用户是否有创建活动的权利
+     * 需求待应答:是否必须为创建者才能修改？
+     */
+    public function delete(User $user, Activity $activity, $type)
+    {
+        if (config('settings.delete_activity_only_creator')) return $user->id == $activity->user_id;
+        else return $this->isAdminOfType($user,$type);
+    }
+    
+    public static function isAdminOfType(User $user,$type) {
         if ($user->sxyl_admin && $type == "sxyl") return true;
         if ($user->xxst_admin && ($type == "yxtx" || $type == "mzy")) return true;
         if (($user->zttr_admin || $user->zttr_tzs ) && $type == "zttr") return true;
@@ -43,23 +81,5 @@ class ActivityPolicy
         if ($user->xywh_admin && $type == "xywh") return true;
         
         return false;
-    }
-
-    /**
-     * 用户是否有编辑活动的权利
-     * 需求待应答:是否必须为创建者才能修改？
-     */
-    public function update(User $user, Activity $activity)
-    {
-        return $user->id == $activity->user_id;
-    }
-
-    /**
-     * 用户是否有创建活动的权利
-     * 需求待应答:是否必须为创建者才能修改？
-     */
-    public function delete(User $user, Activity $activity)
-    {
-        return $user->id == $activity->user_id;
     }
 }

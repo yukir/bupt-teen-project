@@ -72,6 +72,6 @@ class UsersTableSeeder extends Seeder
                 'password' => bcrypt('banned'),
                 'banned' => 1,
             ]);
-        echo "[Seeder]已向数据库注入所有测试用户.";
+        echo "[Seeder]已注入所有测试用户.";
     }
 }

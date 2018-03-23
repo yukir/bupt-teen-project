@@ -45,3 +45,12 @@
     </div>
 </div>
 @endsection
+
+@section('js')
+<script>
+    $(function(){
+        Materialize.updateTextFields();
+    });
+
+</script>
+@stop

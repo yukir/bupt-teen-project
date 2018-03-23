@@ -1,124 +1,47 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
+@section('css')
+<style>
+    
+</style>
+@stop
+@section('content')
+<div class="container content">
+    <br>
+    <h2>北邮青年 - 测试用主页</h2>
 
-        <title>Laravel</title>
+    <div class="test">
+    @auth
+        <h3>当前登录用户:{{ Auth::user()->username }}</h3>
+        <p>{{ Auth::user()->powerShown() }}</p>
+    @else
+        <h3>预置用户名#密码</h3>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Microsoft Yahei','Microsoft YaHei','微软雅黑',微软雅黑,'Simhei','SimHei',黑体,'黑体',sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+        <p>admin#admin 最高权限  </p>
+        <p>demo#demo 默认注册用户  </p>
+        <p>banned#banned 被封禁用户  </p>
 
-            .full-height {
-                height: 100vh;
-            }
+        <p>以下为各种管理员用户</p>
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+        <p><p>sxyl_admin#123456  </p>
+        <p>xxst_admin#123456  </p> 
+        <p>zttr_xtw#123456  </p>
+        <p>zttr_tzs#123456  </p>
+        <p>zttr_tgpx#123456  </p>
+        <p>zttr_admin#123456   </p>
+        <p>xywh_admin#123456  </p>
+    @endauth
+    </div>
 
-            .position-ref {
-                position: relative;
-            }
+    <div class="test">
+        <h3>测试数据:</h3>
+        <p>Auth::user()->isSuperAdmin():
+        @auth 
+            {{ (Auth::user()->isSuperAdmin()) }}
+        @endauth
+        </p>
+        <p> {{ \App\User::count() }}</p>
+    </div>
+</div>
+@stop
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
 
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="#">{{ Auth::user()->username }}</a>
-                        <a href="{{ url('/home') }}">登录页</a>
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
-            document.getElementById('logout-form').submit();">登出</a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    @else
-                        <a href="{{ route('login') }}">登录</a>
-                        <a href="{{ route('register') }}">注册</a>
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    北邮青年 - 测试用主页
-                </div>
-                
-                <div class="test">
-                @auth
-                    <h3>当前登录用户:{{ Auth::user()->username }}</h3>
-                    <p>{{ Auth::user()->powerShown() }}</p>
-                @else
-                    <h3>预置用户名#密码</h3>
-
-                    <p>admin#admin 最高权限  </p>
-                    <p>demo#demo 默认注册用户  </p>
-                    <p>banned#banned 被封禁用户  </p>
-
-                    <p>以下为各种管理员用户</p>
-
-                    <p><p>sxyl_admin#123456  </p>
-                    <p>xxst_admin#123456  </p> 
-                    <p>zttr_xtw#123456  </p>
-                    <p>zttr_tzs#123456  </p>
-                    <p>zttr_tgpx#123456  </p>
-                    <p>zttr_admin#123456   </p>
-                    <p>xywh_admin#123456  </p>
-                @endauth
-                </div>
-                
-                <div class="test">
-                    <h3>测试数据:</h3>
-                    <p>Auth::user()->isSuperAdmin():
-                    @auth 
-                        {{ (Auth::user()->isSuperAdmin()) }}
-                    @endauth
-                    </p>
-                </div>
-            </div>
-
-        </div>
-        <script src="js/app.js"></script>
-    </body>
-</html>

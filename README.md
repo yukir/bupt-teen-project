@@ -74,6 +74,7 @@ check_required 是否需要签到&签退
 user_id 发布者id  
 activity_id 对应活动id  
 content 内容(字符串)  
+checked 是否审核 如果不需要审核 则默认为1
 
 ### Application 活动报名
 user_id 报名者id    
@@ -91,10 +92,10 @@ end_at 结束时间 可空
 
 ## 路由
 
-- 活动activity：CRUD结构
+- 活动activity：CRUD结构 + 活动类型
 
-GET    /activity 活动列表页  
-GET    /activity/create 创建活动页  
+GET    /activity?type={type} 活动列表页  
+GET    /activity/create?type={type} 创建活动页  
 POST   /activity 创建活动请求  
 GET    /activity/{activity} 某活动详情页  
 GET    /activity/{activity}/edit 某活动编辑页  
@@ -117,12 +118,14 @@ DELETE /comment/{comment} 删除某评论请求
 2. "问卷"的机制: 题型有哪些；是否一定要填写；是否需要问卷数据可视化；是否需要批量导出等（若有，可能得延长工作时间等）  
 3. "线上考试"和"作业"的机制： 题型有哪些；是否需要批量导出等（若有，可能得延长工作时间等）  
 4. "活动报名审核"的机制：审核失败是否需要告知驳回理由；  
+5. 基层团建"团员信息管理" 从哪导入信息？人工还是什么；
 
 ## 相关教程
 
 - [用户认证](https://laravel-china.org/docs/laravel/5.6/authentication)
 - [权限](https://laravel-china.org/docs/laravel/5.6/authorization)
 - [前端](https://laravel-china.org/docs/laravel/5.6/blade)
+- [前端采用框架Materialize](http://materializecss.com/)
 
 
 ## License
