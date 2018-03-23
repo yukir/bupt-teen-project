@@ -19,4 +19,8 @@ $(document).ready(() => {
             $("#list-title-hover").addClass('hide');
         }
     })
+    $('.tooltipped').tooltip({
+        enterDelay: 1,
+        position: "right"
+    });
 })

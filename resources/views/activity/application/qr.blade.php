@@ -83,9 +83,9 @@
     </style>
     <div id="app">
         <a id="full-screen-button" href="#!" @click="toggleFullScreen">全屏显示</a>
-        <h3>消息文本</h3>
-        <a href="{{ route('application.signInURL', [$activity]) }}">快速访问</a>
-        <qr-code ref="qrcode" class="z-depth-4" id="qr-frame" src="{{ route('application.signInURL', [$activity]) }}" :size="getQRFrameSize()"></qr-code>
+        <h3>{{ $activity->title }}</h3>
+        <a href="{{ $qrSrc }}">快速访问</a>
+        <qr-code ref="qrcode" class="z-depth-4" id="qr-frame" src="{{ $qrSrc }}" :size="getQRFrameSize()"></qr-code>
         <h4><img src="{{ asset('img/apps.png') }}" /><span>使用任意应用扫码</span></h4>
     </div>
 

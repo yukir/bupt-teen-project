@@ -88,7 +88,7 @@ export default {
         },
         updateApplication: function () {
             var self = this;
-            axios.patch(self.approveUrl, {
+            axios.patch(self.updateUrl, {
                 'status': self.isApproved,
                 'sign_in': self.isSignedIn,
                 'sign_out': self.isSignedOut

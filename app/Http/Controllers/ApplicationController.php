@@ -17,10 +17,12 @@ class ApplicationController extends Controller
      */
     public function index(Activity $activity)
     {
+        $this->authorize('update', $activity);
         $applications = $activity->applications;
         return view('activity.application.list', [
             'title' => '管理申请表',
-            'applications' => $applications
+            'applications' => $applications,
+            'activity' => $activity
         ]);
     }
 
@@ -116,7 +118,8 @@ class ApplicationController extends Controller
         }
         $this->authorize('update', $activity->applications->first());
         return view('activity.application.qr', [
-            'activity' => $activity
+            'activity' => $activity,
+            'qrSrc' => route('application.signInURL', [$activity])
         ]);
     }
 
@@ -126,8 +129,15 @@ class ApplicationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function displaySignOutQR(Request $request, Application $application) {
-        return "请让组织者扫描此二维码来签退";
+    public function displaySignOutQR(Activity $activity) {
+        if ($activity->applications->isEmpty()) {
+            abort(403, '没有申请表。不能签出。');
+        }
+        $this->authorize('update', $activity->applications->first());
+        return view('activity.application.qr', [
+            'activity' => $activity,
+            'qrSrc' => route('application.signOutURL', [$activity])
+        ]);
     }
 
     /**
@@ -136,9 +146,7 @@ class ApplicationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function signIn(Request $request, Application $application) {
-        return view('activity.application.qr', [
-            'application' => $application
-        ]);
+        return "ApplicationController.signIn method";
     }
 
     /**
@@ -209,7 +217,9 @@ class ApplicationController extends Controller
             $application->sign_in = 1;
             $application->save();
             return view('activity.application.signInSuccess', [
-                'activity' => $activity
+                'activity' => $activity,
+                'operation' => "签到",
+                'username' => Auth::user()->username
             ]);
         }
     }
@@ -218,18 +228,26 @@ class ApplicationController extends Controller
      * 扫码签退。
      * 只有参与者会从 Web 访问这个页面。
     */
-    public function signOutWithToken(Application $application, $tokenID) {
+    public function signOutWithToken(Activity $activity, $tokenID) {
         $token = TimestampToken::find($tokenID);
         if ($token == null) {
-            return "Failed2";
+            abort(403, "Failed2: No token" . $tokenID);
         }
         if ($token->created_at->diffInSeconds() > 10) {
             $token->delete();
-            return "Failed";
+            abort(403, "二维码已失效。");
         } else {
+            $application = $activity->applications->where('user_id', Auth::id())->first();
+            if ($application == null) {
+                abort(403, "请登录或先报名");
+            }
             $application->sign_out = 1;
             $application->save();
-            return "🐱";
+            return view('activity.application.signInSuccess', [
+                'activity' => $activity,
+                'operation' => "签退",
+                'username' => Auth::user()->username
+            ]);
         }
     }
 }

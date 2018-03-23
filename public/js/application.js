@@ -207,6 +207,10 @@ $(document).ready(function () {
             $("#list-title-hover").addClass('hide');
         }
     });
+    $('.tooltipped').tooltip({
+        enterDelay: 1,
+        position: "right"
+    });
 });
 
 /***/ }),
@@ -350,7 +354,7 @@ Vue.component('avatar', __webpack_require__(44));
         },
         updateApplication: function updateApplication() {
             var self = this;
-            axios.patch(self.approveUrl, {
+            axios.patch(self.updateUrl, {
                 'status': self.isApproved,
                 'sign_in': self.isSignedIn,
                 'sign_out': self.isSignedOut
