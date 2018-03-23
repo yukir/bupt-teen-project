@@ -8,42 +8,38 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ isset($main_title) ? $main_title." - " : "" }}{{ $title or config('app.name', 'Laravel') }}</title>
+    <title>{{ $title or config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/materialize.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/materialize_font.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
-    @yield('css')
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
+    <style>
+        #app {
+            height: 100vh;
+            display: flex;
+            flex-direction: coloum;
+            justify-content: space-around;
+            align-items: center;
+        }
+        #check-icon {
+            font-size: 6em;
+        }
+    </style>
     <div id="app">
-        @include('layouts.partial.header')
-
-        <main>
-            @yield('content')
-        </main>
-
-        @include('layouts.partial.footer')
+        <h2>{{ $activity->title }}</h2>
+        <div class="center-align">
+            <i id="check-icon" class="material-icons green-text">check_circle</i>
+            <p>{{ $operation }}成功</p>
+        </div>
+        <div>{{ $username }}</div>
     </div>
-    
-    @include('layouts.partial.footer')
-    
     <!-- Scripts -->
     <script src="{{ asset('js/jquery-2.2.3.min.js') }}"></script>
-    <script src="{{ asset('js/materialize.min.js') }}"></script> 
-    <script src="{{ asset('js/main.js') }}"></script> 
-    @if (isset($extended_nav) && $extended_nav)
-    <script>
-        $(function(){
-            $(".tab a ").click(function() { window.location.href = $(this).attr("href")});
-        });    
-    </script>
-    @endif
-    @yield('js')
-    
-    
+    <script src="{{ asset('js/materialize.min.js') }}"></script>
 </body>
 </html>

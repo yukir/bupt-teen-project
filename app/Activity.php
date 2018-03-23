@@ -32,6 +32,10 @@ class Activity extends Model
     public function applications() {
         return $this->hasMany('App\Application');
     }
+  
+    public function timestamp_tokens() {
+        return $this->hasMany('App\TimestampToken');
+    }
     
     //用户是否参加了该活动
     public function user_participated(User $user) {
@@ -57,6 +61,6 @@ class Activity extends Model
             "xywh" => "校园文化",  
         ];
         if (array_key_exists($str,$strArr)) return $strArr[$str];
-        return $str;
+        return $str
     }
 }

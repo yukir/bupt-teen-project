@@ -1,0 +1,110 @@
+.application-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 5px;
+  margin-left: -5px;
+  margin-right: -5px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.application-list.title {
+  border-bottom: solid #e0e0e0 1px;
+}
+
+#list-title-hover {
+  position: fixed;
+  top: 0px;
+  background-color: white;
+  z-index: 700;
+}
+
+.application-list .user-logo {
+  width: 44px;
+  margin-right: 10px;
+}
+
+.application-list .user-name {
+  min-width: 80px;
+  margin-right: 5px;
+}
+
+.application-list .space-between {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+
+.application-list .action-button {
+  width: 60px;
+  text-align: center;
+}
+
+.application-list .action-button [type="checkbox"] + label {
+  padding-left: 20px;
+}
+
+.application-list .action-button [type="checkbox"].filled-in:not(:checked) + label:after {
+  border: 2px solid #e0e0e0;
+}
+
+.application-list .action-button [type="checkbox"] + label:after {
+  border-radius: 50%;
+  border: 1px solid #e0e0e0;
+}
+
+@media screen and (max-width: 600px) {
+  .application-list {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+
+  .application-list .action-button {
+    width: 50%;
+    height: 44px;
+    line-height: 44px;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
+  }
+
+  .application-list .action-button:nth-last-of-type(1) {
+    text-align: right;
+  }
+
+  .application-list .action-button:nth-last-of-type(2) {
+    text-align: left;
+  }
+
+  .application-list .action-button:nth-last-of-type(3) {
+    text-align: right;
+  }
+
+  .application-list.rejected {
+    background-color: #e0e0e0;
+  }
+
+  .application-list.rejected .action-button:nth-last-of-type(1) {
+    display: none;
+  }
+
+  .application-list.rejected .action-button:nth-last-of-type(2) {
+    display: none;
+  }
+
+  .application-status-light {
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    margin: 5px;
+  }
+
+  .application-status-light.on {
+    background-color: #009688;
+  }
+}
+
