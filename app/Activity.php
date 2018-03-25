@@ -61,6 +61,6 @@ class Activity extends Model
             "xywh" => "校园文化",  
         ];
         if (array_key_exists($str,$strArr)) return $strArr[$str];
-        return $str
+        return $str;
     }
 }
