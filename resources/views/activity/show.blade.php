@@ -22,9 +22,22 @@
     <hr>
     <p>活动开始时间:{{ $activity->start_at }}</p>
     <p>是否需要签到、签退:{{ $activity->check_required ? "是" : "否" }}</p>
+    @can('update',$activity)
+    <a href="/activity/{{ $activity->id }}/edit" class="waves-effect waves-light btn">编辑</a>
+    @endcan
+    @can('delete',$activity)
+    <a href="#" onclick="event.preventDefault();
+            document.getElementById('delete_activity').submit();" class="waves-effect waves-light btn">删除</a>
+    <form id="delete_activity" action="/activity/{{ $activity->id }}" method="POST" style="display: none;">
+        <input type="hidden" name="_method" value="DELETE">
+        @csrf
+    </form>
+    @endcan
     <hr>
     @include('activity.partials.comment')
     <hr>
+    
+    
     <h4>评论列表</h4>
     @if ($activity->comments()->count()==0)
     <p>暂无评论!</p>

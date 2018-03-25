@@ -37,6 +37,12 @@
     <script>
         $(function(){
             $(".tab a ").click(function() { window.location.href = $(this).attr("href")});
+            @if (session('info'))
+                Materialize.toast("{{ session('info') }}",3000);
+                @php
+                    session()->forget('info');
+                @endphp
+            @endif    
         });    
     </script>
     @endif

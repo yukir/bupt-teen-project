@@ -86,7 +86,9 @@ class ActivityController extends Controller
         if ($request->has("check_required") && $request->input("check_required")=="on") $a->check_required = 1;
         auth()->user()->activities()->save($a);
                
-        return redirect()->route('activity.show',['activity' => $a->id]);
+        return redirect()->route('activity.show',[
+            'activity' => $a->id,
+        ])->with('info', '活动发布成功!');
         
     }
 
@@ -116,7 +118,14 @@ class ActivityController extends Controller
      */
     public function edit(Activity $activity)
     {
-        //
+        $this->authorize('update',$activity);
+        
+        return view('activity.update', [
+            'main_title' => '编辑活动 - '.$activity->title,
+            'extended_nav' => 1,
+            'type' => $activity->type,
+            'activity' => $activity,
+        ]);
     }
 
     /**
@@ -128,7 +137,27 @@ class ActivityController extends Controller
      */
     public function update(Request $request, Activity $activity)
     {
-        //
+        $this->authorize('update',$activity);
+        
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:191' ,
+            'type' => [
+                'required',
+                Rule::in(['sxyl','yxtx','mzy','zttr','tgpx', 'xywh'])
+            ],
+            'content' => 'required|max:65535',
+            'start_at' => 'nullable|date|after:yesterday',
+            'community_day_id' => 'nullable|numeric',
+        ]);
+        
+        $activity->fill($request->only(['title','content','type','start_at','community_day_id']));
+        if ($request->has("check_required") && $request->input("check_required")=="on") $activity->check_required = 1;
+        
+        $activity->save();
+        
+        return redirect()->route('activity.show',[
+            'activity' => $activity->id,
+        ])->with('info', '活动修改成功!');
     }
 
     /**
@@ -139,6 +168,14 @@ class ActivityController extends Controller
      */
     public function destroy(Activity $activity)
     {
-        //
+        $this->authorize('delete',$activity);
+        
+        $type = $activity->type;
+        
+        $activity->delete();
+        
+        return redirect()->action(
+            'ActivityController@index', ['type' => $type]
+        )->with('info', '活动删除成功!');;
     }
 }
