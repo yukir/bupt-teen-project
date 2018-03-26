@@ -102,6 +102,8 @@ GET    /activity/{activity}/edit 某活动编辑页
 PUT    /activity/{activity} 编辑某活动请求  
 DELETE /activity/{activity} 删除某活动请求  
 
+- 主题团日同上 community_day
+
 - 评论/反馈 comment:
 
 （评论增删改查均在活动内页采用AJAX）  

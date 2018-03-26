@@ -24,8 +24,9 @@
     <li><a class="dropdown-item" href="/community_day">主题团日</a></li>
     <li><a class="dropdown-item" href="/activity?type=tgpx">团干培训</a></li>
     <!-- 团员信息待修改 -->
-    @if (Auth::user()->zttr_admin)
+    @if (Auth::user()->zttr_admin || Auth::user()->isSuperAdmin())
     <li><a class="dropdown-item" href="/community/manage">团员信息管理</a></li>
+    <li><a class="dropdown-item" href="/community_day/create">发布主题团日</a></li>
     @endif
     
 </ul>
@@ -75,8 +76,9 @@
             <li><a href="/activity?type=mzy">梦之翼理论学习社团</a></li>
             <li><a href="/community_day">主题团日</a></li>
             <li><a href="/activity?type=tgpx">团干培训</a></li>
-            @if (Auth::user()->zttr_admin)
-            <li><a href="/community/manage">团员信息管理</a></li>
+            @if (Auth::user()->zttr_admin || Auth::user()->isSuperAdmin())
+            <li><a href="/community_day/create">发布主题团日</a></li>
+            <li><a href="/community_day/manage">团员信息管理</a></li>
             @endif
             <!-- <li><a href="/activity?type=xywh">校园文化活动</a></li> -->
             @else

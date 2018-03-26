@@ -20,23 +20,23 @@
 @stop
 @section('content')
 <div class="container">
-    @if ($activities->isEmpty())
-    <p>暂无活动！</p>
+    @if ($community_days->isEmpty())
+    <p>暂无主题团日！</p>
     @else  
     <table class="striped" >
         <thead>
             <tr>
-                <th class="maxwidth">标题</th>
+                <th class="maxwidth">团日名称</th>
                 <th class="minwidth">发布时间</th>
             </tr>
-            </tr>
+          
         </thead>
 
         <tbody>
-            @foreach ($activities as $activity)
+            @foreach ($community_days as $community_day)
             <tr>
-                <td><a href="/activity/{{ $activity->id }}">{{ str_limit($activity->title,30) }}</a></td>
-                <td class="timeago" datetime="{{ date('Y-m-d H:i:s',strtotime($activity->created_at)) }}"></td>
+                <td><a href="/community_day/{{ $community_day->id }}">{{ str_limit($community_day->name,30) }}</a></td>
+                <td class="timeago" datetime="{{ date('Y-m-d H:i:s',strtotime($community_day->created_at)) }}"></td>
             </tr>
             @endforeach
         </tbody>

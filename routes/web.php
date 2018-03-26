@@ -40,3 +40,6 @@ Route::delete('/comment/{comment}', 'CommentController@destroy')->name('comment.
 
 //个人主页
 Route::get('/user/{user}', 'UserController@index')->name('user.index');
+
+//主题团日
+Route::resource('community_day','CommunityDayController');

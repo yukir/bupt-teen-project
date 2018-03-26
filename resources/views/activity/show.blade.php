@@ -39,9 +39,6 @@
     
     
     <h4>评论列表</h4>
-    @if ($activity->comments()->count()==0)
-    <p>暂无评论!</p>
-    @else
     <div class="comment_list">
         <div class="comment comment_clone">
             <p><strong><a class="comment_author" href="/user/{{ Auth::user()->id }}">{{ Auth::user()->username }}</a></strong>:<span class="comment_content"></span></p>
@@ -49,12 +46,15 @@
                 <span class="timeago">刚刚</span>
             </div>
         </div>
+        @if ($activity->comments()->count()==0)
+        <p class="no_comment">暂无评论!</p>
+        @else
         @foreach ($activity->comments as $comment)
             @can('view',$comment,$activity)
             <div class="comment" data-id="{{ $comment->id }}">
                 <p><strong><a class="comment_author" href="/user/{{ $comment->user->id }}">{{ $comment->user->username }}</a></strong>:<span class="comment_content">{{ $comment->content }}</span></p>
                 <div class="comment_buttons">
-                    <span class="timeago">{{ $comment->created_at }}</span>
+                    <span class="timeago" datetime="{{ date('Y-m-d H:i:s',strtotime($comment->created_at)) }}"></span>
                     @can('update',$activity,$comment)
                     &nbsp;|&nbsp;<a href="#" class="comment_update">修改</a>     
                     @endcan
@@ -71,7 +71,7 @@
             
             @endcan
         @endforeach
-    @endif
+        @endif
     </div>    
 </div>
 @stop
@@ -98,6 +98,7 @@
                         $clone.removeClass("comment_clone");
                         $('html, body').animate({scrollTop:$(document).height()-$(window).height()}, 'slow'); 
                         $("#content").val("");
+                        $(".no_comment").hide();
                     } else {
                         console.log(data);
                         Materialize.toast("评论发表失败！",3000);

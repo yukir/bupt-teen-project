@@ -30,7 +30,7 @@
         @endif
         <textarea type="string" style="display:none" id="content" name="content" value="{{ old('content') }}"></textarea>
         <div class="input-field">
-            <input id="start_at" type="datetime" class="validate {{ $errors->has('start_at') ? ' invalid' : '' }}" name="start_at" value="{{ old('start_at') }}" required>
+            <input id="start_at" type="text" class="validate {{ $errors->has('start_at') ? ' invalid' : '' }}" name="start_at" value="{{ old('start_at') }}" required>
             <label for="password-confirm">活动开始时间</label>
         </div>
         @if ($errors->has('start_at'))
@@ -56,8 +56,13 @@
 <script src="{{ asset('js/jquery.datetimepicker.full.min.js')}}"></script>
 <script>
     $.datetimepicker.setLocale('zh');
+    var logic = function() {
+        Materialize.updateTextFields();
+    }
     $('#start_at').datetimepicker({
          minDate:'0',//yesterday is minimum date(for today use 0 or -1970/01/01)
+        onChangeDateTime:logic,
+        onShow:logic,
     });
     var E = window.wangEditor;
     var editor = new E("#content_wang");
