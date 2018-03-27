@@ -28,7 +28,9 @@ class CommunityDayController extends Controller
         $community_days = CommunityDay::orderBy('created_at', 'desc')->take(30)->get();
         return view('community_day.list', [
             'main_title' => '主题团日列表',
+            'extended_nav' => 2,
             'community_days' => $community_days,
+            
         ]);
     }
     
@@ -45,6 +47,7 @@ class CommunityDayController extends Controller
        
         return view('community_day.create', [
             'main_title' => '创建主题团日',
+            'extended_nav' => 2,
         ]);
         
     }
@@ -86,6 +89,7 @@ class CommunityDayController extends Controller
         return view('community_day.show', [
             'main_title' => $community_day->name,
             'community_day' => $community_day,
+            'extended_nav' => 2,
         ]);
     }
 
@@ -97,6 +101,7 @@ class CommunityDayController extends Controller
         return view('community_day.update', [
             'main_title' => '编辑主题团日 - '.$community_day->name,
             'community_day' => $community_day,
+            'extended_nav' => 2,
         ]);
     }
 
@@ -132,8 +137,10 @@ class CommunityDayController extends Controller
     {
         $this->authorize('delete',$community_day);
         
-        //TODO 删除旗下活动
-        
+        foreach($community_day->activities as $activity) {
+            $activity->delete_comments();
+        }
+        $community_day->activities()->delete();
         $community_day->delete();
         
         return redirect()->action(

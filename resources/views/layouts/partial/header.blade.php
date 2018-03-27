@@ -87,16 +87,31 @@
             @endauth
         </ul>
     </div>
-    @if (isset($extended_nav) && $extended_nav)
-    <div class="nav-content">
-        <div class="container">
-            <ul class="tabs tabs-transparent active_check_sub">
-                <li class="tab {{ Route::currentRouteName()=='activity.index' ? 'active' : '' }}" ><a href="/activity?type={{ $type }}">活动列表</a></li>
-                @can('createWithType',[\App\Activity::Class,$type])
-                <li class="tab {{ Route::currentRouteName()=='activity.create' ? 'active' : '' }}"><a href="/activity/create?type={{ $type }}">发布活动</a></li>
-                @endcan
-            </ul>
+    @if (isset($extended_nav))
+        
+        <div class="nav-content">
+            <div class="container">
+            @switch($extended_nav)
+                @case(1)
+                <ul class="tabs tabs-transparent active_check_sub">
+                    <li class="tab {{ Route::currentRouteName()=='activity.index' ? 'active' : '' }}" ><a href="/activity?type={{ $type }}">活动列表</a></li>
+                    @can('createWithType',[\App\Activity::Class,$type])
+                    <li class="tab {{ Route::currentRouteName()=='activity.create' ? 'active' : '' }}"><a href="/activity/create?type={{ $type }}">发布活动</a></li>
+                    @endcan
+                </ul>
+                @break
+                @case(2)
+                <ul class="tabs tabs-transparent active_check_sub">
+                    <li class="tab {{ Route::currentRouteName()=='community_day.index' ? 'active' : '' }}" ><a href="/community_day">主题团日列表</a></li>
+                    @can('create',\App\CommunityDay::Class)
+                    <li class="tab {{ Route::currentRouteName()=='community_day.create' ? 'active' : '' }}"><a href="/community_day/create">创建主题团日</a></li>
+                    @endcan
+                </ul>
+                @break
+                @default
+            @endswitch
+            </div>
         </div>
-    </div>
+        
     @endif
 </nav>

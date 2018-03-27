@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Activity;
 use App\User;
+use App\CommunityDay;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -29,9 +30,11 @@ class ActivityController extends Controller
         
         $activities = Activity::where('type',$type)->orderBy('created_at', 'desc')->take(30)->get();
         
+        $extended_nav = $type == 'zttr' ? 2 : 1;
+        
         return view('activity.list', [
             'main_title' => Activity::type_name($type).'活动列表',
-            'extended_nav' => 1,
+            'extended_nav' => $extended_nav,
             'type' => $request->input('type'),
             'activities' => $activities,
         ]);
@@ -44,15 +47,26 @@ class ActivityController extends Controller
      */
     public function create(Request $request)
     {
-        if(!$request->has('type')) abort(400);
+        if(!$request->has('type')) abort(400,'缺少参数！');
         
         $type = $request->input('type');
         
         $this->authorize('createWithType',[\App\Activity::Class,$request->input('type')]);
+        
+        $community_day_id = null;
+        $extended_nav = $type == 'zttr' ? 1 : 2;
+        
+        if ($type == 'zttr') {
+            //创建的是主题团日活动
+            if (!$request->has('community_day_id')) abort(400,'缺少参数！');
+            $community_day_id = $request->input('community_day_id');
+            $this->authorize('createActivity',CommunityDay::find($community_day_id));
+        }
        
         return view('activity.create', [
             'main_title' => Activity::type_name($type).'活动 - 创建',
-            'extended_nav' => 1,
+            'community_day_id' => $community_day_id,
+            'extended_nav' => $extended_nav ,
             'type' => $type,
         ]);
         
@@ -82,6 +96,14 @@ class ActivityController extends Controller
         //权限后端验证
         $this->authorize('createWithType',[\App\Activity::Class,$request->input('type')]);
             
+        if ($request->input('type') == 'zttr') {
+            //创建的是主题团日活动
+            if (!$request->has('community_day_id')) abort(400,'缺少参数！');
+            $community_day_id = $request->input('community_day_id');
+            $this->authorize('createActivity',CommunityDay::find($community_day_id));
+        } else {
+            if ($request->has('community_day_id')) dd(1);
+        }
         $a = new Activity($request->only(['title','content','type','start_at','community_day_id']));
         if ($request->has("check_required") && $request->input("check_required")=="on") $a->check_required = 1;
         auth()->user()->activities()->save($a);
@@ -172,6 +194,7 @@ class ActivityController extends Controller
         
         $type = $activity->type;
         
+        $activity->delete_comments();
         $activity->delete();
         
         return redirect()->action(

@@ -19,7 +19,12 @@
             @endif
         </div> 
         <input type="hidden" name="type" value="{{ $type }}">
-        <p>活动分类:{{ \App\Activity::type_name($type) }}</p>
+        <input type="hidden" name="community_day_id" value="{{ $community_day_id }}">
+        <p>活动分类:{{ \App\Activity::type_name($type) }}&nbsp;
+        @if ($community_day_id!=null)
+        <a href="/community_day/{{ $community_day_id }}">前往主题团日:{{ \App\CommunityDay::find($community_day_id)->name }}</a>
+        @endif
+        </p>
         <div id="content_wang">
             {!! old('content') !!}
         </div>

@@ -14,7 +14,11 @@
 @section('content')
 <div class="container">
     <h3>{{ $activity->title }}</h3>
-    <p>活动分类： {{ \App\Activity::type_name($activity->type) }}</p>
+    <p>活动分类： {{ \App\Activity::type_name($activity->type) }}&nbsp;
+        @if ($activity->community_day_id!=null)
+        <a href="/community_day/{{ $activity->community_day_id }}">前往主题团日:{{ $activity->community_day->name }}</a>
+        @endif
+    </p>
     <hr>
     <div class="main">
         {!! $activity->content !!}

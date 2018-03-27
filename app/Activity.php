@@ -63,4 +63,10 @@ class Activity extends Model
         if (array_key_exists($str,$strArr)) return $strArr[$str];
         return $str;
     }
+    
+    
+    //评论删除
+    public function delete_comments() {
+        $this->comments()->delete();
+    }
 }
